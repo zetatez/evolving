@@ -1,5 +1,6 @@
 # EVOLVING
 TRADING ENGINE `evolving`. MacOSX ONLY.
+
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
 ## PROJECT STRUCTURE
@@ -31,22 +32,27 @@ tree ~/.config/evolving
 - DEPENDENCIES
     ```bash
     brew install cliclick
-    cliclick -V
-        # cliclick 4.0.1, 2018-04-10
-    which cliclick
-        # /usr/local/bin/cliclick
+
+    cliclick -V             # cliclick 4.0.1, 2018-04-10
+    which cliclick          # /usr/local/bin/cliclick
+    ```
+
+- INSTALLATION
+    ```bash
+    pip install evolving
     ```
 
 - CLONE PROJECT FROM GITHUB
     ```bash
     cd; git clone git@github.com:zetatez/evolving.git; cd evolving; pip install -r requirements.txt
+    python setup.py install
     ```
     
 - CONFIGURATION
     ```bash
-    cd; mkdir -p .config/evolving; cd ~/.config/evolving; touch config.xml
-    vi config.xml
-    # -------------------
+    mkdir -p ~/.config/evolving
+
+    echo """
     <evolving>
         <trading>
             <userid>77777777777</userid>
@@ -65,7 +71,7 @@ tree ~/.config/evolving
             <mail_receivers>mailAddress@163.com</mail_receivers>
         </mail>
     </evolving>
-    # -------------------
+    """ > ~/.config/evolving/config.xml
     ```
 
 ## GET START WITH `evolving`
@@ -149,6 +155,7 @@ svc.logoutClient()
     - getIPOwinningLots(dateRange = "today")
     - liquidating()
     - entrustPortfolio(StockCodeAmountPriceList = [])
+
 
 ### Build Your Timed Tasks
 ```python

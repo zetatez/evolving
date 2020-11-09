@@ -1,0 +1,20 @@
+
+<evolving>
+    <trading>
+        <userid>77777777777</userid>
+        <password>123456</password>
+        <broker_code>PAZQ</broker_code>
+        <broker_account>66666666</broker_account>
+        <broker_password>123456</broker_password>
+        <bank_name>工商银行</bank_name>
+        <bank_account>666666666666666666</bank_account>
+        <bank_password>123456</bank_password>
+    </trading>
+    <mail>
+        <mail_host>smtp.163.com</mail_host>
+        <mail_sender>mailAddress@163.com</mail_sender>
+        <mail_license>SNRRQOKFKEUNNSFT</mail_license>
+        <mail_receivers>mailAddress@163.com</mail_receivers>
+    </mail>
+</evolving>
+
