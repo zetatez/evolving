@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, time, json
+import re, os, sys, time, json
 from datetime import datetime
 import xmltodict
 import logging
@@ -30,11 +30,11 @@ class Config(object):
         self.__comment = self.__config.get("comment", None)
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, '.config/darwin/config.xml')
+        configPath = os.path.join(BASE_DIR, '.config/evolving/config.xml')
         config = dict()
         with open(configPath, 'r', encoding='utf8') as fp:
             xml = fp.read()
-        config = dict(xmltodict.parse(xml).get('darwin').get('trading'))
+        config = dict(xmltodict.parse(xml).get('evolving').get('trading'))
         return config
 
     @property
@@ -76,7 +76,7 @@ class Config(object):
     def bank_password(self):
         return self.__bank_password
 
-class MailConfig(object):
+class MConfig(object):
     def __init__(self):
         self.__config = self.__loadConfiguration()
         self.__mail_host = self.__config.get("mail_host", None)
@@ -85,11 +85,11 @@ class MailConfig(object):
         self.__mail_receivers = self.__config.get("mail_receivers", None).split(';')
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, '.config/darwin/config.xml')
+        configPath = os.path.join(BASE_DIR, '.config/evolving/config.xml')
         config = dict()
         with open(configPath, 'r', encoding='utf8') as fp:
             xml = fp.read()
-        config = dict(xmltodict.parse(xml).get('darwin').get('email'))
+        config = dict(xmltodict.parse(xml).get('evolving').get('mail'))
         return config
 
     @property
@@ -123,11 +123,11 @@ class Msg(object):
 class Mail(object):
     def __init__(self, msg):
         assert isinstance(msg, Msg)
-        self.__mailConfig = MailConfig()
-        self.mail_host = self.__mailConfig.mail_host
-        self.mail_sender = self.__mailConfig.mail_sender
-        self.mail_license = self.__mailConfig.mail_license
-        self.mail_receivers = self.__mailConfig.mail_receivers
+        self.__mconfig = MConfig()
+        self.mail_host = self.__mconfig.mail_host
+        self.mail_sender = self.__mconfig.mail_sender
+        self.mail_license = self.__mconfig.mail_license
+        self.mail_receivers = self.__mconfig.mail_receivers
         self.stp = smtplib.SMTP()
         self.stp.connect(self.mail_host, 25)
         # self.stp.set_debuglevel(1)
@@ -189,7 +189,7 @@ class Logging(logging.Logger):
         self.__setFileHandler()
 
     def __setFileHandler(self):
-        path = os.path.join(BASE_DIR, 'logs/darwin/', self.__logType)
+        path = os.path.join(BASE_DIR, 'logs/evolving/', self.__logType)
         if not os.path.exists(path):
             os.makedirs(path)
         logFilePath = os.path.join(path, datetime.now().date().strftime('%Y-%m-%d.log'))
@@ -197,16 +197,22 @@ class Logging(logging.Logger):
         fh.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
         self.addHandler(fh)
 
-def __test_Config():
+if __name__ == "__main__":
+    # --- Config
     config = Config()
     print(config.config)
     print(config.userid)
 
-def __test_Msg():
+    # --- MConfig
+    config = MConfig()
+    print(config.config)
+    print(config.mail_sender)
+
+    # --- Msg
     msg = Msg()
     mail = Mail(msg)
 
-def __test_Logging():
+    # --- Logging
     lg = Logging(logType='prod_env')
     lg.info("this is a info")
     lg.debug("this is a debug")
@@ -221,15 +227,7 @@ def __test_Logging():
     lg.error("this is a error")
     lg.critical('this is a critical')
 
-def __test_Tlog():
+    # --- Tlog
     tlog = Tlog(action='entrust buy', assetsName='stock', assetsCode='000000', price='45.93', amount='1000', status='successed', comments='')
     mail = Mail(tlog)
     print(tlog)
-    # print(tlog.str)
-
-if __name__ == "__main__":
-    # __test_Config()
-    # __test_Msg()
-    # __test_Logging()
-    # __test_Tlog()
-    pass

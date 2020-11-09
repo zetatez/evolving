@@ -1,119 +1,74 @@
-# evolving
-evolving Trading Engine.
-
+# EVOLVING
+TRADING ENGINE `evolving`. MacOSX ONLY.
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
-## Project Structure
+## PROJECT STRUCTURE
 ```bash
+tree evolving 
+    # evolving
+    # ├── LICENSE
+    # ├── README.md
+    # ├── evolving
+    # │   ├── __init__.py
+    # │   ├── ascmds.py
+    # │   ├── evolving.py
+    # │   └── helper.py
+    # ├── requirements.txt
+    # ├── setup.py
+    # └── tests
+    #     ├── __init__.py
+    #     ├── evolving.py
+    #     └── helper.py
 
-
+tree ~/.config/evolving
+    # /Users/xxxx/.config/evolving
+    # └── config.xml
 ```
 
-Note: Mac OS only.
-
-- requirements
+- REQUIREMENTS
     python >= 3.8.5
 
-- dependencies
-
-    a. install required packages
-
+- DEPENDENCIES
     ```bash
     brew install cliclick
-    brew install ta-lib
-    brew install npm
-    npm install node
+    cliclick -V
+        # cliclick 4.0.1, 2018-04-10
+    which cliclick
+        # /usr/local/bin/cliclick
     ```
 
-    b. install and configure mongoDB
-
+- CLONE PROJECT FROM GITHUB
     ```bash
-    brew tap mongodb/brew
-    brew install mongodb-community@4.2
-    
-    brew services start mongodb-community
-    
-    mongo
-    use admin
-    db.createUser({user:"root",pwd:"passw0rd",roles:[{role:'root',db:'admin'}]})
-    db.auth("root","passw0rd")
-    
-    # Configure
-    cp /usr/local/etc/mongod.conf /usr/local/etc/mongod.conf.bk
-    vi /usr/local/etc/mongod.conf
-    # -----------------------------------
-    systemLog:
-      destination: file
-      path: /usr/local/var/log/mongodb/mongo.log
-      logAppend: true
-    storage:
-      dbPath: /usr/local/var/mongodb
-    net:
-      bindIp: 127.0.0.1
-    security:
-      authorization: enabled
-    # -----------------------------------
-    
-    brew services restart mongodb-community
-    
+    cd; git clone git@github.com:zetatez/evolving.git; cd evolving; pip install -r requirements.txt
     ```
-
-- clone project from github
+    
+- CONFIGURATION
     ```bash
-    cd
-    git clone git@github.com:zetatez/darwin.git
-    cd darwin
-    pip install -r requirements.txt
-    ```
-    
-- modify configuration
-    ```bash
-    tree darwin/configs 
-        darwin/configs
-        ├── config.json
-        ├── dbConfig.json
-        ├── infos.md
-        ├── mailConfig.json
-        ├── portfolio.json
-        └── stockpools.json
-    ```
-
-1. config.json
-    ```json
-    {
-        "userid": "xxx",
-        "password": "xxxxxx",
-        "broker": "PAZQ",
-        "broker_account": "xxxxxxxxxxxx",
-        "broker_password": "xxxxxx",
-        "bank_name": "工商银行",
-        "bank_account": "xxxxxxxxxxxxxxxxxxx",
-        "bank_password": "xxxxxx"
-    }
+    cd; mkdir -p .config/evolving; cd ~/.config/evolving; touch config.xml
+    vi config.xml
+    # -------------------
+    <evolving>
+        <trading>
+            <userid>77777777777</userid>
+            <password>123456</password>
+            <broker_code>PAZQ</broker_code>
+            <broker_account>66666666</broker_account>
+            <broker_password>123456</broker_password>
+            <bank_name>工商银行</bank_name>
+            <bank_account>666666666666666666</bank_account>
+            <bank_password>123456</bank_password>
+        </trading>
+        <mail>
+            <mail_host>smtp.163.com</mail_host>
+            <mail_sender>mailAddress@163.com</mail_sender>
+            <mail_license>SNRRQOKFKEUNNSFT</mail_license>
+            <mail_receivers>mailAddress@163.com</mail_receivers>
+        </mail>
+    </evolving>
+    # -------------------
     ```
 
-2. dbConfig.json
-    ```json
-    {
-        "DB": "MongoDB",
-        "host": "127.0.0.1",
-        "port": 27017,
-        "user": "root",
-        "password": "passw0rd"
-    }
-    ```
-
-3. mailConfig.json
-    ```json
-    {
-        "mail_host": "smtp.163.com",
-        "mail_sender": "xxxxxxxx@163.com",
-        "mail_license": "xxxxxxxx",
-        "mail_receivers": ["xxxxxxxx@163.com"]
-    }
-    ```
-
-## Get Start with Darwin
+## GET START WITH `evolving`
 ```python
 from darwin import Service, Darwin
 svc = Service()
@@ -312,77 +267,3 @@ job.hour.on(9)
 job.dow.on('MON', 'TUE', 'WED', 'THU', 'FRI')
 cron.write()
 ```
-
-### Use Darwin Command Line
-
-
-- Darwin shell
-```bash
- ./darwin -h
-
-        # NAME:
-        #         darwin
-
-        # SYNOPSIS:
-        #         darwin -u userid -p password
-        #         darwin -u userid -p password -k
-        #         darwin -[qsjh]
-
-        # OPTIONS:
-        #         -u  userid
-        #         -p  password
-        #         -q  quit client
-        #         -s  start darwin shell
-        #         -h  help
-
-        # AUTHOR:
-        #         F. F
-        #         Email: fromfairest@icloud.com
-
-        # Ex:
-        #         1. To login client
-        #                 darwin -u userid -p password
-
-        #         2. To logout client
-        #                 darwin -q
-
-        #         3. To use darwin shell
-        #                 darwin -s
-
-        #         4. login client, start darwin shell
-        #                 darwin -u userid -p password -s
-
-# to login in client
-./darwin -u <useid> -p <password>
-
-# to start darwin shell
-./darwin -s
-    # 16:34:46: savvy . .. ...
-    # Python 3.8.5 (v3.8.5:580fbb018f, Jul 20 2020, 12:11:27) 
-    # Type 'copyright', 'credits' or 'license' for more information
-    # IPython 7.17.0 -- An enhanced Interactive Python. Type '?' for help.
-
-    # ## SAVVY SHELL:
-
-    # import os
-    # import sys
-    # import time
-    # from datetime import datetime
-    # import numpy as np
-    # import pandas as pd
-    # from matplotlib.pyplot import *
-    # from pprint import pprint as show
-    # from darwin import Tlog, Service, Darwin, DarwinSim
-    # from helper import BASE_DIR, Config, Msg, Mail, Logging
-
-
-```
-
-
-
-
-
-
-
-
-
