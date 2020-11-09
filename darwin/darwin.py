@@ -136,7 +136,6 @@ class Service(object):
         time.sleep(1)
         return self.loginClient()
 
-
 class Base(metaclass = abc.ABCMeta):
     def __init__(self):
         self._config = Config()

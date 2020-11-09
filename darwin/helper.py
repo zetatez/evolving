@@ -5,13 +5,12 @@ import re
 import sys
 import abc
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import xmltodict
 import logging
 from logging import FileHandler
 import requests
-from bs4 import BeautifulSoup
 from pprint import pprint as show
 import email
 import smtplib
@@ -20,7 +19,7 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.expanduser('~')
 
 class Config(object):
     def __init__(self):
@@ -36,7 +35,7 @@ class Config(object):
         self.__comment = self.__config.get("comment", None)
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, 'evolving/configs/config.xml')
+        configPath = os.path.join(BASE_DIR, '.config/darwin/config.xml')
         config = dict()
         with open(configPath, 'r', encoding='utf8') as fp:
             xml = fp.read()
@@ -91,7 +90,7 @@ class MailConfig(object):
         self.__mail_receivers = self.__config.get("mail_receivers", None).split(';')
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, 'evolving/configs/config.xml')
+        configPath = os.path.join(BASE_DIR, '.config/darwin/config.xml')
         config = dict()
         with open(configPath, 'r', encoding='utf8') as fp:
             xml = fp.read()
@@ -195,7 +194,7 @@ class Logging(logging.Logger):
         self.__setFileHandler()
 
     def __setFileHandler(self):
-        path = os.path.join(BASE_DIR, 'evolving/logs/', self.__logType)
+        path = os.path.join(BASE_DIR, 'logs/darwin/', self.__logType)
         if not os.path.exists(path):
             os.makedirs(path)
         logFilePath = os.path.join(path, datetime.now().date().strftime('%Y-%m-%d.log'))
@@ -234,8 +233,8 @@ def __test_Tlog():
     # print(tlog.str)
 
 if __name__ == "__main__":
-    __test_Config()
-    __test_Msg()
+    # __test_Config()
+    # __test_Msg()
     # __test_Logging()
     # __test_Tlog()
     pass
