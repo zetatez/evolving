@@ -1,5 +1,5 @@
-# Darwin
-Darwin Trading Engine.
+# evolving
+evolving Trading Engine.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 

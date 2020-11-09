@@ -1,13 +1,13 @@
 Metadata-Version: 2.1
-Name: darwin
-Version: 0.1.0
-Summary: darwin trading api
+Name: evolving
+Version: 0.1.3
+Summary: trading api
 Home-page: https://github.com/zetatez/darwin
 Author: Lorenzo
 Author-email: zetatez@icloud.com
 License: UNKNOWN
-Description: # Darwin
-        Darwin Trading Engine.
+Description: # evolving
+        evolving Trading Engine.
         
         <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
         
@@ -396,8 +396,8 @@ Description: # Darwin
         
         
 Platform: UNKNOWN
-Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: GPL License
-Classifier: Operating System :: OSX
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown

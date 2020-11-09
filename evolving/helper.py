@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import os
-import re
-import sys
-import abc
-import time
+import os, sys, time, json
 from datetime import datetime
-import json
 import xmltodict
 import logging
 from logging import FileHandler
@@ -58,8 +53,8 @@ class Config(object):
         return self.__password
 
     @property
-    def broker(self):
-        return self.__broker
+    def broker_code(self):
+        return self.__broker_code
 
     @property
     def broker_account(self):

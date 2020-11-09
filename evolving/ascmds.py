@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# ---------------------------------------------------------------
 # -- practical
 # ---------------------------------------------------------------
 asdaemons = """/usr/bin/osascript -e '
@@ -45,7 +44,6 @@ on run {userid, pwd}
 	-- ex
 	-- nohup osascript daemons.scpt xxxx xxxx >> /dev/null 2>&1 &
 end run
-
 '"""
 
 asisClientLoggedIn = """/usr/bin/osascript -e '
@@ -78,7 +76,8 @@ on isClientLoggedIn()
 end isClientLoggedIn
 
 isClientLoggedIn()
-
+-- ex
+-- osascript isClientLoggedIn.scpt
 '"""
 
 
@@ -113,10 +112,8 @@ on isBrokerLoggedIn()
 end isBrokerLoggedIn
 
 isBrokerLoggedIn()
-
 -- ex
 -- osascript isBrokerLoggedIn.scpt
-
 '"""
 
 
@@ -173,7 +170,6 @@ on run {userid, pwd}
 	-- ex
 	-- osascript loginClient.scpt userid password
 end run
-
 '"""
 
 
@@ -190,10 +186,8 @@ on logoutClient()
 end logoutClient
 
 logoutClient()
-
 -- ex
 -- osascript logoutClient.scpt
-
 '"""
 
 
@@ -233,12 +227,22 @@ on loginBroker(broker, trade_account, trade_pwd)
 					click button 1 of combo box 1 of sheet 1 of window 1 of application process "同花顺" of application "System Events"
 					
 					set brokerName to "平安证券" -- default broker
-					if broker is "PAZQ" then -- 平安证券
-						set brokerName to "平安证券"
-					else if broker is "ZXZQ" then -- 中信证券
+					if broker is "ZXZQ" then 			-- 中信证券
 						set brokerName to "中信证券"
-					else if broker is "DFCFZQ" then -- 东方财富证券, 同花顺不能使用
-						set brokerName to "东方财富证券"
+					else if broker is "PAZQ" then 		-- 平安证券
+						set brokerName to "平安证券"
+					else if broker is "ZSZQ" then 		-- 浙商证券
+						set brokerName to "浙商证券"
+					else if broker is “GTJA” then 		-- 国泰君安
+						set brokerName to "国泰君安"
+					else if broker is “GJZQ” then 		-- 国金证券
+						set brokerName to "国金证券"
+					else if broker is “XYZQ” then 		-- 兴业证券
+						set brokerName to "兴业证券"
+					else if broker is “ZJZQ” then 		-- 中金证券
+						set brokerName to "中金证券"
+					else if broker is “ZTZQ” then 		-- 中泰证券
+						set brokerName to "中泰证券"
 					end if
 					
 					-- 获取曾经登陆过的券商列表
@@ -360,7 +364,6 @@ on run {broker, trade_account, trade_pwd}
 	-- ex
 	-- osascript loginBroker.scpt PAZQ xxxx xxxx
 end run
-
 '"""
 
 
@@ -397,10 +400,8 @@ on logoutBroker()
 end logoutBroker
 
 logoutBroker()
-
 -- ex
 -- osascript logoutBroker.scpt
-
 '"""
 
 
@@ -484,7 +485,6 @@ on run {transferType, amount, bank_pwd, trade_pwd}
 	-- ex
 	-- osascript transfer.scpt bank2broker 100 112173 xxxx
 end run
-
 '"""
 
 
@@ -543,7 +543,6 @@ on run {dateRange}
 	-- ex
 	-- osascript getTransferRecords.scpt thisWeek
 end run
-
 '"""
 
 
@@ -614,7 +613,6 @@ on run {assetType, stockCode}
 	-- ex
 	-- osascript getBids.scpt stock 600030
 end run
-
 '"""
 
 
@@ -893,7 +891,6 @@ on run {tradingAction, assetType, stockCode, price, amount}
 	-- ex
 	-- osascript issuingEntrust.scpt buy stock 002241 37.01 100
 end run
-
 '"""
 
 
@@ -995,7 +992,6 @@ on revokeEntrust(revokeType, assetType, contractNo)
 	end tell
 end revokeEntrust
 
-
 on run {revokeType, assetType, contractNo}
 	-- revokeType: "allBuy", "allSell", "allBuyAndSell", "contractNo"
 	-- assetType: "stock", "sciTech"
@@ -1010,7 +1006,6 @@ on run {revokeType, assetType, contractNo}
 	-- ex
 	-- osascript revokeEntrust.scpt allBuyAndSell stock None
 end run
-
 '"""
 
 
@@ -1076,10 +1071,8 @@ on revokeAllEntrust()
 end revokeAllEntrust
 
 revokeAllEntrust()
-
 -- ex
 -- osascript revokeAllEntrust.scpt
-
 '"""
 
 
@@ -1140,11 +1133,10 @@ on revokeAllBuyEntrust()
 end revokeAllBuyEntrust
 
 revokeAllBuyEntrust()
-
 -- ex
 -- osascript revokeAllBuyEntrust.scpt
-
 '"""
+
 
 asrevokeAllSellEntrust = """/usr/bin/osascript -e '
 -- revoke all sell entrust
@@ -1203,11 +1195,10 @@ on revokeAllSellEntrust()
 end revokeAllSellEntrust
 
 revokeAllSellEntrust()
-
 -- ex
 -- osascript revokeAllSellEntrust.scpt
-
 '"""
+
 
 asgetAccountInfo = """/usr/bin/osascript -e '
 -- get account information
@@ -1236,10 +1227,8 @@ on getAccountInfo()
 end getAccountInfo
 
 getAccountInfo()
-
 -- ex
 -- osascript getAccountInfo.scpt
-
 '"""
 
 
@@ -1300,8 +1289,8 @@ on run {assetType}
 	-- ex
 	-- osascript getHoldingShares.scpt stock
 end run
-
 '"""
+
 
 asgetEntrust = """/usr/bin/osascript -e '
 -- get entrust
@@ -1409,7 +1398,6 @@ on run {assetType, dateRange, isRevocable}
 	-- ex
 	-- osascript getEntrust.scpt stock thisWeek false
 end run
-
 '"""
 
 
@@ -1504,7 +1492,6 @@ on run {assetType, dateRange}
 	-- ex
 	-- osascript getClosedDeals.scpt stock thisYear
 end run
-
 '"""
 
 
@@ -1601,7 +1588,6 @@ on run {assetType, dateRange}
 	-- ex
 	-- osascript getCapitalDetails.scpt stock thisSeason
 end run
-
 '"""
 
 
@@ -1686,8 +1672,8 @@ on run {queryType, dateRange}
 	-- ex
 	-- osascript getIPO.scpt allotmentNo thisWeek
 end run
-
 '"""
+
 
 asgetTodayIPO = """/usr/bin/osascript -e '
 on getTodayIPO()
@@ -1736,11 +1722,10 @@ on getTodayIPO()
 end getTodayIPO
 
 getTodayIPO()
-
 -- ex
 -- osascript todayIPO.scpt
-
 '"""
+
 
 asoneKeyIPO = """/usr/bin/osascript -e '
 on oneKeyIPO()
@@ -1781,31 +1766,14 @@ on oneKeyIPO()
 end oneKeyIPO
 
 oneKeyIPO()
-
 -- ex
 -- osascript oneKeyIPO.scpt
 '"""
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ---------------------------------------------------------------
 # -- simulation
 # ---------------------------------------------------------------
-
 asgetAccountInfoSim = """/usr/bin/osascript -e '
-
 -- get account information - simulation
 
 on getAccountInfoSim()
@@ -1832,7 +1800,6 @@ on getAccountInfoSim()
 end getAccountInfoSim
 
 getAccountInfoSim()
-
 -- ex
 -- osascript getAccountInfoSim.scpt
 '"""
@@ -2109,6 +2076,7 @@ on run {tradingAction, assetType, stockCode, price, amount}
 	-- osascript issuingEntrustSim.scpt buy stock 002241 37.01 100
 end run
 '"""
+
 
 asgetHoldingSharesSim = """/usr/bin/osascript -e '
 -- get holding shares - simulation

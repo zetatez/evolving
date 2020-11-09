@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import re
-import abc
-import os
-import sys
-import json
-import time
+import abc, os, sys, json, time
 from pprint import pprint as show
-
-import asCmds
-from helper import BASE_DIR, Config, Mail, Logging, Tlog
+from . import ascmds
+from . import helper
 
 class Lock(object):
     """ Lock: lock maintainer
@@ -55,18 +49,16 @@ class Lock(object):
             islock = islocked()
         if islock:
             return False
-        # 请求到锁后锁定
         self.lock()
         return True
-
 
 class Service(object):
     """ THS service. up and down daemons, login client, logout client, is client logged in
     """
     def __init__(self):
-        self._config = Config()
-        self.logging = Logging(logType='service')
-        self.lock = Lock()
+        self._config = helper.Config()
+        self.__logging = helper.Logging(logType='service')
+        self.__lock = Lock()
 
     def isClientLoggedIn(self):
         """ is client logged in: 选择不加锁, 加不加锁都会产生影响
@@ -76,7 +68,7 @@ class Service(object):
         Raises:
         """
         status = False
-        cmd = asCmds.asisClientLoggedIn
+        cmd = ascmds.asisClientLoggedIn
         res = os.popen(cmd).read().strip()
         if res == "true":
             status = True
@@ -95,15 +87,15 @@ class Service(object):
         if self.isClientLoggedIn():
             res = "successed"
         else:
-            cmd = asCmds.asloginClient + ' ' + self._config.userid + ' ' + self._config.password
+            cmd = ascmds.asloginClient + ' ' + self._config.userid + ' ' + self._config.password
             res = os.popen(cmd).read().strip()
 
         if res == "successed":
-            self.logging.info("login client: " + res)
+            self.__logging.info("login client: " + res)
             status = True
-            self.lock.unlock()
+            self.__lock.unlock()
         else:
-            self.logging.error("login client: " + res)
+            self.__logging.error("login client: " + res)
         return status
 
     def logoutClient(self):
@@ -113,16 +105,16 @@ class Service(object):
             True/False
         Raises:
         """
-        cmd = asCmds.aslogoutClient
+        cmd = ascmds.aslogoutClient
         res = os.popen(cmd).read().strip()
 
         status = False
         if res == "successed":
-            self.logging.info("logout client: " + res)
+            self.__logging.info("logout client: " + res)
             status = True
-            self.lock.lock()
+            self.__lock.lock()
         else:
-            self.logging.error("logout client: " + res)
+            self.__logging.error("logout client: " + res)
         return status
 
     def reLoginClient(self):
@@ -138,7 +130,7 @@ class Service(object):
 
 class Base(metaclass = abc.ABCMeta):
     def __init__(self):
-        self._config = Config()
+        self._config = helper.Config()
 
     @abc.abstractmethod
     def loginBroker(self):
@@ -216,14 +208,14 @@ class Base(metaclass = abc.ABCMeta):
         pass
 
 
-class Darwin(Base):
-    """ Darwin: trading engine
+class Evolving(Base):
+    """ Evolving: trading engine
     """
     def __init__(self):
-        super(Darwin, self).__init__()
-        self.logging = Logging(logType = 'env_prod')
-        self.__keepInformed = False                         # 邮件通知
-        self.lock = Lock()
+        super(Evolving, self).__init__()
+        self.__logging = helper.Logging(logType = 'env_prod')
+        self.__keepInformed = False                             # mail me
+        self.__lock = Lock()
         
     @property
     def keepInformed(self):
@@ -241,13 +233,13 @@ class Darwin(Base):
         Raises:
         """
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
-        cmd = asCmds.asisBrokerLoggedIn + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
+        cmd = ascmds.asisBrokerLoggedIn + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
         res = os.popen(cmd).read().strip()
         status = True if res == "true" else False
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     def loginBroker(self):
@@ -258,17 +250,17 @@ class Darwin(Base):
         Raises:
         """
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
-        cmd = asCmds.asloginBroker + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
+        cmd = ascmds.asloginBroker + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
         res = os.popen(cmd).read().strip()
         if res == "successed":
-            self.logging.info("login broker: " + res)
+            self.__logging.info("login broker: " + res)
             status = True
         else:
-            self.logging.error("login broker: " + res)
-        self.lock.unlock()
+            self.__logging.error("login broker: " + res)
+        self.__lock.unlock()
         return status
 
     def logoutBroker(self):
@@ -279,17 +271,17 @@ class Darwin(Base):
         Raises:
         """
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
-        cmd = asCmds.aslogoutBroker
+        cmd = ascmds.aslogoutBroker
         res = os.popen(cmd).read().strip()
         if res == "successed":
-            self.logging.info("logout broker: " + res)
+            self.__logging.info("logout broker: " + res)
             status = True
         else:
-            self.logging.error("login broker: " + res)
-        self.lock.unlock()
+            self.__logging.error("login broker: " + res)
+        self.__lock.unlock()
         return status
 
     def getAccountInfo(self):
@@ -314,11 +306,11 @@ class Darwin(Base):
         Raises:
         """
         accountInfo = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return accountInfo
 
         try:
-            cmd = asCmds.asgetAccountInfo
+            cmd = ascmds.asgetAccountInfo
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             flag = ls.pop(0)
@@ -333,15 +325,15 @@ class Darwin(Base):
                     doc.update({ls.pop(0): ls.pop(0)})
                 accountInfo.update({'data': doc})
                 accountInfo.update({'info': None})
-                self.logging.info("get account info successed")
+                self.__logging.info("get account info successed")
             else:
                 accountInfo.update({'status': False})
                 accountInfo.update({'data': doc})
                 accountInfo.update({'info': ' '.join(ls)})
-                self.logging.error("get account info failed: " + accountInfo.get('info'))
+                self.__logging.error("get account info failed: " + accountInfo.get('info'))
         except Exception as e:
-            self.logging.error("get account info failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get account info failed: " + str(e))
+        self.__lock.unlock()
         return accountInfo
 
 
@@ -357,18 +349,18 @@ class Darwin(Base):
         def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
             try:
                 if self.__keepInformed:
-                    tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
-                    Mail(tlog)
+                    tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
+                    helper.Mail(tlog)
             except Exception as e:
-                self.logging.error("mailing failed with error: " + str(e))
+                self.__logging.error("mailing failed with error: " + str(e))
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.astransfer + ' ' + transferType + ' ' + str(amount) + ' ' + self._config.bank_password + ' ' + self._config.broker_password
+            cmd = ascmds.astransfer + ' ' + transferType + ' ' + str(amount) + ' ' + self._config.bank_password + ' ' + self._config.broker_password
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -376,16 +368,16 @@ class Darwin(Base):
             info = None
             if flag == "successed":
                 status = True
-                self.logging.info("transfer successed: " + transferType + ' ' + str(amount))
+                self.__logging.info("transfer successed: " + transferType + ' ' + str(amount))
                 mailMe(action = "transfer", assetsName = transferType, assetsCode = '', price = '', amount = amount, status = "successed")
             else:
                 info = ' '.join(ls)
-                self.logging.error("transfer failed: " + transferType + ' ' + str(amount) + '. Err: ' + info)
+                self.__logging.error("transfer failed: " + transferType + ' ' + str(amount) + '. Err: ' + info)
                 mailMe(action = "transfer", assetsName = transferType, assetsCode = '', price = '', amount = amount, status = "failed")
         except Exception as e:
-            self.logging.error("transfer failed: " + transferType + ' ' + str(amount) + '. Err: ' + str(e))
+            self.__logging.error("transfer failed: " + transferType + ' ' + str(amount) + '. Err: ' + str(e))
             mailMe(action = "transfer", assetsName = transferType, assetsCode = '', price = '', amount = amount, status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     def transfer_bank2broker(self, amount = 100000):
@@ -419,11 +411,11 @@ class Darwin(Base):
         Raises:
         """
         transferRecords = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return transferRecords
 
         try:
-            cmd = asCmds.asgetTransferRecords + ' ' + dateRange
+            cmd = ascmds.asgetTransferRecords + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -439,15 +431,15 @@ class Darwin(Base):
                 transferRecords.update({'data': []})
                 while ls:
                     transferRecords['data'].append([ls.pop(0) for x in range(length) if ls])
-                self.logging.info("get transfer records successed")
+                self.__logging.info("get transfer records successed")
             else:
                 transferRecords.update({'comment': ''})
                 transferRecords.update({'data': []})
                 transferRecords.update({'info': ' '.join(ls)})
-                self.logging.error("get transfer records failed: " + transferRecords.get('info'))
+                self.__logging.error("get transfer records failed: " + transferRecords.get('info'))
         except Exception as e:
-            self.logging.error("get transfer records failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get transfer records failed: " + str(e))
+        self.__lock.unlock()
         return transferRecords
 
     def getAssetType(self, stockCode):
@@ -491,14 +483,14 @@ class Darwin(Base):
         Raises:
         """
         bids = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return bids
 
         if assetType is None:
             assetType = self.getAssetType(stockCode)
 
         try:
-            cmd = asCmds.asgetBids + ' ' + assetType + ' ' + stockCode
+            cmd = ascmds.asgetBids + ' ' + assetType + ' ' + stockCode
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             flag = ls.pop(0)
@@ -528,14 +520,14 @@ class Darwin(Base):
                     ct = ct + 1
                 bids.update({'data': doc})
                 bids.update({'info': ''})
-                self.logging.info("get bids successed")
+                self.__logging.info("get bids successed")
             else:
                 bids.update({'data': doc})
                 bids.update({'info': ' '.join(ls)})
-                self.logging.error("get bids failed: " + bids.get('info'))
+                self.__logging.error("get bids failed: " + bids.get('info'))
         except Exception as e:
-            self.logging.error("get bids failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get bids failed: " + str(e))
+        self.__lock.unlock()
         return bids
  
     def issuingEntrust(self, stockCode, amount, price = None, tradingAction = 'buy', assetType = None):
@@ -555,15 +547,15 @@ class Darwin(Base):
                 if self.__keepInformed:
                     action = 'entrust ' + action
                     priceLogged = 'best price' if price is None else price
-                    tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = priceLogged, amount = amount, status = status, comments = '')
-                    Mail(tlog)
+                    tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = priceLogged, amount = amount, status = status, comments = '')
+                    helper.Mail(tlog)
             except Exception as e:
-                self.logging.error("mailing failed with error: " + str(e))
+                self.__logging.error("mailing failed with error: " + str(e))
             return
         
         status = False
         contractNo = None
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status, contractNo
 
         if assetType is None:
@@ -580,7 +572,7 @@ class Darwin(Base):
             else:
                 assert not (int(amount) < 100)
 
-            cmd = asCmds.asissuingEntrust + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
+            cmd = ascmds.asissuingEntrust + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -589,16 +581,16 @@ class Darwin(Base):
             if flag == "successed":
                 status = True
                 contractNo = ls.pop(0)
-                self.logging.info("issuing entrust successed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount))
+                self.__logging.info("issuing entrust successed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount))
                 mailMe(action = tradingAction, assetsName = assetType, assetsCode = stockCode, price = price, amount = amount, status = "successed")
             else:
                 info = ' '.join(ls)
-                self.logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + info)
+                self.__logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + info)
                 mailMe(action = tradingAction, assetsName = assetType, assetsCode = stockCode, price = price, amount = amount, status = "failed")
         except Exception as e:
-            self.logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + str(e))
+            self.__logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + str(e))
             mailMe(action = tradingAction, assetsName = assetType, assetsCode = stockCode, price = price, amount = amount, status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status, contractNo
 
     def buy(self, stockCode, amount, price = None):
@@ -711,11 +703,11 @@ class Darwin(Base):
         Raises:
         """
         todayIPO = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return todayIPO
 
         try:
-            cmd = asCmds.asgetTodayIPO
+            cmd = ascmds.asgetTodayIPO
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -732,15 +724,15 @@ class Darwin(Base):
                 while ls:
                     todayIPO['data'].append([ls.pop(0) for x in range(length) if ls])
                 todayIPO.update({'info': ''})
-                self.logging.info("get today IPO successed")
+                self.__logging.info("get today IPO successed")
             else:
                 todayIPO.update({'comment': ''})
                 todayIPO.update({'data': []})
                 todayIPO.update({'info': ' '.join(ls)})
-                self.logging.error("get today IPO failed: " + todayIPO.get('info'))
+                self.__logging.error("get today IPO failed: " + todayIPO.get('info'))
         except Exception as e:
-            self.logging.error("get today IPO failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get today IPO failed: " + str(e))
+        self.__lock.unlock()
         return todayIPO
 
     def oneKeyIPO(self):
@@ -753,18 +745,18 @@ class Darwin(Base):
         def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
             try:
                 if self.__keepInformed:
-                    tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = '')
-                    Mail(tlog)
+                    tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = '')
+                    helper.Mail(tlog)
             except Exception as e:
-                self.logging.error("mailing failed with error: " + str(e))
+                self.__logging.error("mailing failed with error: " + str(e))
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.asoneKeyIPO
+            cmd = ascmds.asoneKeyIPO
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             
@@ -772,16 +764,16 @@ class Darwin(Base):
             info = None
             if flag == "successed":
                 status = True
-                self.logging.info("auto IPO successed")
+                self.__logging.info("auto IPO successed")
                 mailMe(action = "auto IPO", assetsName = '', assetsCode = '', price = '', amount = '', status = "successed")
             else:
                 info = ' '.join(ls)
-                self.logging.error("auto IPO failed: " + info)
+                self.__logging.error("auto IPO failed: " + info)
                 mailMe(action = "auto IPO", assetsName = '', assetsCode = '', price = '', amount = '', status = "failed")
         except Exception as e:
-            self.logging.error("IPO failed: " + str(e))
+            self.__logging.error("IPO failed: " + str(e))
             mailMe(action = "IPO", assetsName = '', assetsCode = '', price = '', amount = '', status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     def revokeEntrust(self, revokeType = "allBuyAndSell", assetType = "stock", contractNo = None):
@@ -798,18 +790,18 @@ class Darwin(Base):
             try:
                 if self.__keepInformed:
                     assetsCodeLogged = '' if assetsCode is None else assetsCode
-                    tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCodeLogged, price = price, amount = amount, status = status, comments = comments)
-                    Mail(tlog)
+                    tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCodeLogged, price = price, amount = amount, status = status, comments = comments)
+                    helper.Mail(tlog)
             except Exception as e:
-                self.logging.error("mailing failed with error: " + str(e))
+                self.__logging.error("mailing failed with error: " + str(e))
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.asrevokeEntrust + " " + revokeType + " " + assetType + " " + str(contractNo)
+            cmd = ascmds.asrevokeEntrust + " " + revokeType + " " + assetType + " " + str(contractNo)
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -817,15 +809,15 @@ class Darwin(Base):
             info = ls.pop(0)
             if flag == "successed":
                 status = True
-                self.logging.info("revoke entrust successed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Info: " + info)
+                self.__logging.info("revoke entrust successed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Info: " + info)
                 mailMe(action = "revoke entrust " + revokeType, assetsName = assetType, assetsCode = contractNo, price = '', amount = '', status = "successed")
             else:
-                self.logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: " + info)
+                self.__logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: " + info)
                 mailMe(action = "revoke entrust " + revokeType, assetsName = assetType, assetsCode = contractNo, price = '', amount = '', status = "failed")
         except Exception as e:
-            self.logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: "+ str(e))
+            self.__logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: "+ str(e))
             mailMe(action = "revoke entrust " + revokeType, assetsName = assetType, assetsCode = contractNo, price = '', amount = '', status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     # 优化, 单独写一个文件
@@ -838,31 +830,31 @@ class Darwin(Base):
         """
         def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
             if self.__keepInformed:
-                tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
-                Mail(tlog)
+                tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
+                helper.Mail(tlog)
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.asrevokeAllBuyEntrust
+            cmd = ascmds.asrevokeAllBuyEntrust
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
             flag = ls.pop(0)
             if flag == "successed":
                 status = True
-                self.logging.info("revoke all sell entrust successed")
+                self.__logging.info("revoke all sell entrust successed")
                 mailMe(action = "revoke all sell entrust", status='successed')
             else:
-                self.logging.error("revoke all sell entrust failed")
+                self.__logging.error("revoke all sell entrust failed")
                 mailMe(action = "revoke all sell entrust", status = "failed")
         except Exception as e:
-            self.logging.error("revoke all sell entrust failed Err: "+ str(e))
+            self.__logging.error("revoke all sell entrust failed Err: "+ str(e))
             mailMe(action = "revoke all sell entrust", status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     # 优化, 单独写一个文件
@@ -875,31 +867,31 @@ class Darwin(Base):
         """
         def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
             if self.__keepInformed:
-                tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
-                Mail(tlog)
+                tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
+                helper.Mail(tlog)
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.asrevokeAllSellEntrust
+            cmd = ascmds.asrevokeAllSellEntrust
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
             flag = ls.pop(0)
             if flag == "successed":
                 status = True
-                self.logging.info("revoke all buy entrust successed")
+                self.__logging.info("revoke all buy entrust successed")
                 mailMe(action = "revoke all buy entrust", status='successed')
             else:
-                self.logging.error("revoke all buy entrust failed")
+                self.__logging.error("revoke all buy entrust failed")
                 mailMe(action = "revoke all buy entrust", status = "failed")
         except Exception as e:
-            self.logging.error("revoke all buy entrust failed Err: "+ str(e))
+            self.__logging.error("revoke all buy entrust failed Err: "+ str(e))
             mailMe(action = "revoke all buy entrust", status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     # 优化, 单独写一个文件
@@ -912,31 +904,31 @@ class Darwin(Base):
         """
         def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
             if self.__keepInformed:
-                tlog = Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
-                Mail(tlog)
+                tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
+                helper.Mail(tlog)
             return
 
         status = False
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status
 
         try:
-            cmd = asCmds.asrevokeAllEntrust
+            cmd = ascmds.asrevokeAllEntrust
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
             flag = ls.pop(0)
             if flag == "successed":
                 status = True
-                self.logging.info("revoke all entrust successed")
+                self.__logging.info("revoke all entrust successed")
                 mailMe(action = "revoke all entrust", status='successed')
             else:
-                self.logging.error("revoke all entrust failed")
+                self.__logging.error("revoke all entrust failed")
                 mailMe(action = "revoke all entrust", status = "failed")
         except Exception as e:
-            self.logging.error("revoke all entrust failed Err: "+ str(e))
+            self.__logging.error("revoke all entrust failed Err: "+ str(e))
             mailMe(action = "revoke all entrust", status = "failed")
-        self.lock.unlock()
+        self.__lock.unlock()
         return status
 
     def revokeContractNoEntrust(self, assetType = "stock",  contractNo = "N8743678"):
@@ -967,11 +959,11 @@ class Darwin(Base):
         Raises:
         """
         holdingShares = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return holdingShares
 
         try:
-            cmd = asCmds.asgetHoldingShares + ' ' + assetType
+            cmd = ascmds.asgetHoldingShares + ' ' + assetType
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -991,15 +983,15 @@ class Darwin(Base):
                 while ls:
                     holdingShares['data'].append([ls.pop(0) for x in range(length) if ls])
                 holdingShares.update({'info': ''})
-                self.logging.info("get holding shares successed")
+                self.__logging.info("get holding shares successed")
             else:
                 holdingShares.update({'comment': ''})
                 holdingShares.update({'data': []})
                 holdingShares.update({'info': ' '.join(ls)})
-                self.logging.error("get holding shares failed: " + holdingShares.get('info'))
+                self.__logging.error("get holding shares failed: " + holdingShares.get('info'))
         except Exception as e:
-            self.logging.error("get holding shares failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get holding shares failed: " + str(e))
+        self.__lock.unlock()
         return holdingShares
 
     def getAllHoldingShares(self):
@@ -1054,11 +1046,11 @@ class Darwin(Base):
         Raises:
         """
         entrust = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return entrust
 
         try:
-            cmd = asCmds.asgetEntrust + ' ' +  assetType + ' ' + dateRange + ' ' + str(isRevocable).lower()
+            cmd = ascmds.asgetEntrust + ' ' +  assetType + ' ' + dateRange + ' ' + str(isRevocable).lower()
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1079,15 +1071,15 @@ class Darwin(Base):
                 while ls:
                     entrust['data'].append([ls.pop(0) for x in range(length) if ls])
                 entrust.update({'info': ''})
-                self.logging.info("get entrust successed")
+                self.__logging.info("get entrust successed")
             else:
                 entrust.update({'comment': ''})
                 entrust.update({'data': []})
                 entrust.update({'info': ' '.join(ls)})
-                self.logging.error("get entrust failed: " + entrust.get('info'))
+                self.__logging.error("get entrust failed: " + entrust.get('info'))
         except Exception as e:
-            self.logging.error("get entrust failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get entrust failed: " + str(e))
+        self.__lock.unlock()
         return entrust
 
     def getTodayAllRevocableEntrust(self):
@@ -1138,11 +1130,11 @@ class Darwin(Base):
         Raises:
         """
         closedDeals = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return closedDeals
 
         try:
-            cmd = asCmds.asgetClosedDeals + ' ' +  assetType + ' ' + dateRange
+            cmd = ascmds.asgetClosedDeals + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             
@@ -1159,15 +1151,15 @@ class Darwin(Base):
                 while ls:
                     closedDeals['data'].append([ls.pop(0) for x in range(length) if ls])
                 closedDeals.update({'info': None})
-                self.logging.info("get closed deals successed")
+                self.__logging.info("get closed deals successed")
             else:
                 closedDeals.update({'comment': ''})
                 closedDeals.update({'data': []})
                 closedDeals.update({'info': ' '.join(ls)})
-                self.logging.error("get closed deals failed: " + closedDeals.get('info'))
+                self.__logging.error("get closed deals failed: " + closedDeals.get('info'))
         except Exception as e:
-            self.logging.error("get closed deals failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get closed deals failed: " + str(e))
+        self.__lock.unlock()
         return closedDeals
 
     def getCapitalDetails(self, assetType = 'stock', dateRange = 'thisSeason'):
@@ -1185,11 +1177,11 @@ class Darwin(Base):
         Raises:
         """
         capitalDetails = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return capitalDetails
 
         try:
-            cmd = asCmds.asgetCapitalDetails + ' ' +  assetType + ' ' + dateRange
+            cmd = ascmds.asgetCapitalDetails + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             
@@ -1207,15 +1199,15 @@ class Darwin(Base):
                 while ls:
                     capitalDetails['data'].append([ls.pop(0) for x in range(length) if ls])
                 capitalDetails.update({'info': ''})
-                self.logging.info("get capital details successed")
+                self.__logging.info("get capital details successed")
             else:
                 capitalDetails.update({'comment': ''})
                 capitalDetails.update({'data': []})
                 capitalDetails.update({'info': ' '.join(ls)})
-                self.logging.error("get capital details failed: " + capitalDetails.get('info'))
+                self.__logging.error("get capital details failed: " + capitalDetails.get('info'))
         except Exception as e:
-            self.logging.error("get capital details failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get capital details failed: " + str(e))
+        self.__lock.unlock()
         return capitalDetails
 
 
@@ -1235,11 +1227,11 @@ class Darwin(Base):
         Raises:
         """
         result = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return result
 
         try:
-            cmd = asCmds.asgetIPO + ' ' + queryType + ' ' + dateRange 
+            cmd = ascmds.asgetIPO + ' ' + queryType + ' ' + dateRange 
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1260,22 +1252,22 @@ class Darwin(Base):
                     result.update({'comment': ''})
                     result.update({'data': []})
                     result.update({'info': ' '.join(ls)})
-                    self.logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + result.get('info'))
+                    self.__logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + result.get('info'))
 
                 result.update({'comment': [ls.pop(0) for x in range(length) if ls]})
                 result.update({'data': []})
                 while ls:
                     result['data'].append([ls.pop(0) for x in range(length) if ls])
                 result.update({'info': ''})
-                self.logging.info("get IPO failed successed: " + queryType + " " + dateRange)
+                self.__logging.info("get IPO failed successed: " + queryType + " " + dateRange)
             else:
                 result.update({'comment': ''})
                 result.update({'data': []})
                 result.update({'info': ' '.join(ls)})
-                self.logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + result.get('info'))
+                self.__logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + result.get('info'))
         except Exception as e:
-            self.logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + str(e))
-        self.lock.unlock()
+            self.__logging.error("get IPO failed: " + queryType + " " + dateRange +  ". Err: "  + str(e))
+        self.__lock.unlock()
         return result
 
     def getIPOentrust(self, dateRange = "today"):
@@ -1339,10 +1331,10 @@ class Darwin(Base):
                         time.sleep(3.5)
                     else:
                         # when l is empty
-                        self.logging.info("liquidating successed")
+                        self.__logging.info("liquidating successed")
                         return True
         except Exception as e:
-            self.logging.error("liquidating failed: " + str(e))
+            self.__logging.error("liquidating failed: " + str(e))
         return False
     
     def entrustPortfolio(self, StockCodeAmountPriceList = []):
@@ -1358,14 +1350,14 @@ class Darwin(Base):
             try:
                 status, contractNo = self.issuingEntrust(stockCode=stockCode, amount=amount, price=price, tradingAction="buy")
                 statusList.append({'stockCode': stockCode, 'status': status, 'contractNo': contractNo})
-                self.logging.info("entrust buy successed")
+                self.__logging.info("entrust buy successed")
             except Exception as e:
-                self.logging.error("entrust buy failed: " + str(e))
+                self.__logging.error("entrust buy failed: " + str(e))
                 statusList.append({'stockCode': stockCode, 'status': 'failed', 'contractNo': None})
         return statusList
 
 
-class DarwinSim():
+class EvolvingSim():
     """ Simulation Trading class
     """
     def __init__(self):
@@ -1374,9 +1366,9 @@ class DarwinSim():
         Returns:
         Raises:
         """
-        self.logging = Logging(logType = 'env_simu')
-        self._config = Config()
-        self.lock = Lock()
+        self.__logging = helper.Logging(logType = 'env_simu')
+        self._config = helper.Config()
+        self.__lock = Lock()
 
     def getAccountInfo(self):
         """
@@ -1385,11 +1377,11 @@ class DarwinSim():
         Raises:
         """
         accountInfo = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return accountInfo
 
         try:
-            cmd = asCmds.asgetAccountInfoSim
+            cmd = ascmds.asgetAccountInfoSim
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1405,15 +1397,15 @@ class DarwinSim():
                     doc.update({ls.pop(0): ls.pop(0)})
                 accountInfo.update({'data': doc})
                 accountInfo.update({'info': None})
-                self.logging.info("get account info successed")
+                self.__logging.info("get account info successed")
             else:
                 accountInfo.update({'status': False})
                 accountInfo.update({'data': doc})
                 accountInfo.update({'info': ' '.join(ls)})
-                self.logging.error("get account info failed: " + accountInfo.get('info'))
+                self.__logging.error("get account info failed: " + accountInfo.get('info'))
         except Exception as e:
-            self.logging.error("get account info failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get account info failed: " + str(e))
+        self.__lock.unlock()
         return accountInfo
 
     def issuingEntrust(self, stockCode, amount, price = None, tradingAction = 'buy'):
@@ -1427,7 +1419,7 @@ class DarwinSim():
         assetType = 'stock'
         status = False
         contractNo = None
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status, contractNo
 
         try:
@@ -1438,7 +1430,7 @@ class DarwinSim():
 
             assert not (int(amount) < 100)
 
-            cmd = asCmds.asissuingEntrustSim + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
+            cmd = ascmds.asissuingEntrustSim + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             
@@ -1447,13 +1439,13 @@ class DarwinSim():
             if flag == "successed":
                 status = True
                 contractNo = ls.pop(0)
-                self.logging.info("issuing entrust successed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + ' contractNo ' + contractNo)
+                self.__logging.info("issuing entrust successed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + ' contractNo ' + contractNo)
             else:
                 info = ' '.join(ls)
-                self.logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + info)
+                self.__logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + info)
         except Exception as e:
-            self.logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + str(e))
-        self.lock.unlock()
+            self.__logging.error("issuing entrust failed: " + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount) + '. Err: ' + str(e))
+        self.__lock.unlock()
         return status, contractNo
 
     def buy(self, stockCode, amount, price = None):
@@ -1484,23 +1476,23 @@ class DarwinSim():
         assetType = "stock"
         status = False
         info = None
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return status, info
 
         try:
-            cmd = asCmds.asrevokeEntrustSim  + " " + revokeType + " " + assetType + " " + str(contractNo)
+            cmd = ascmds.asrevokeEntrustSim  + " " + revokeType + " " + assetType + " " + str(contractNo)
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
             flag = ls.pop(0)
             info = ls.pop(0)      # 成功或失败都返回
             if flag == "successed":
                 status = True
-                self.logging.info("revoke entrust successed: " + revokeType + " " + assetType + " " + str(contractNo))
+                self.__logging.info("revoke entrust successed: " + revokeType + " " + assetType + " " + str(contractNo))
             else:
-                self.logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: " + info)
+                self.__logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: " + info)
         except Exception as e:
-            self.logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: "+ str(e))
-        self.lock.unlock()
+            self.__logging.error("revoke entrust failed: " + revokeType + " " + assetType + " " + str(contractNo) + ". Err: "+ str(e))
+        self.__lock.unlock()
         return status, info
 
     def getHoldingShares(self):
@@ -1512,11 +1504,11 @@ class DarwinSim():
         """
         assetType = 'stock'
         holdingShares = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return holdingShares
 
         try:
-            cmd = asCmds.asgetHoldingSharesSim + ' ' + assetType
+            cmd = ascmds.asgetHoldingSharesSim + ' ' + assetType
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1533,15 +1525,15 @@ class DarwinSim():
                 while ls:
                     holdingShares['data'].append([ls.pop(0) for x in range(length) if ls])
                 holdingShares.update({'info': ''})
-                self.logging.info("get holding shares successed")
+                self.__logging.info("get holding shares successed")
             else:
                 holdingShares.update({'comment': ''})
                 holdingShares.update({'data': []})
                 holdingShares.update({'info': ' '.join(ls)})
-                self.logging.error("get holding shares failed: " + holdingShares.get('info'))
+                self.__logging.error("get holding shares failed: " + holdingShares.get('info'))
         except Exception as e:
-            self.logging.error("get holding shares failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get holding shares failed: " + str(e))
+        self.__lock.unlock()
         return holdingShares
 
     def getEntrust(self, dateRange = 'today', isRevocable = True):
@@ -1554,11 +1546,11 @@ class DarwinSim():
         """
         assetType = 'stock'
         entrust = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return entrust
 
         try:
-            cmd = asCmds.asgetEntrustSim + ' ' +  assetType + ' ' + dateRange + ' ' + str(isRevocable).lower()
+            cmd = ascmds.asgetEntrustSim + ' ' +  assetType + ' ' + dateRange + ' ' + str(isRevocable).lower()
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1575,15 +1567,15 @@ class DarwinSim():
                 while ls:
                     entrust['data'].append([ls.pop(0) for x in range(length) if ls])
                 entrust.update({'info': ''})
-                self.logging.info("get entrust successed")
+                self.__logging.info("get entrust successed")
             else:
                 entrust.update({'comment': ' '})
                 entrust.update({'data': []})
                 entrust.update({'info': ' '.join(ls)})
-                self.logging.error("get entrust failed: " + entrust.get('info'))
+                self.__logging.error("get entrust failed: " + entrust.get('info'))
         except Exception as e:
-            self.logging.error("get entrust failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get entrust failed: " + str(e))
+        self.__lock.unlock()
         return entrust
 
     def getClosedDeals(self, dateRange = 'today'):
@@ -1595,11 +1587,11 @@ class DarwinSim():
         """
         assetType = 'stock'
         closedDeals = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return closedDeals
 
         try:
-            cmd = asCmds.asgetClosedDealsSim + ' ' +  assetType + ' ' + dateRange
+            cmd = ascmds.asgetClosedDealsSim + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1615,15 +1607,15 @@ class DarwinSim():
                 closedDeals.update({'data': []})
                 while ls:
                     closedDeals['data'].append([ls.pop(0) for x in range(length) if ls])
-                self.logging.info("get closed deals successed")
+                self.__logging.info("get closed deals successed")
             else:
                 closedDeals.update({'comment': ''})
                 closedDeals.update({'data': []})
                 closedDeals.update({'info': ' '.join(ls)})
-                self.logging.error("get closed deals failed: " + closedDeals.get('info'))
+                self.__logging.error("get closed deals failed: " + closedDeals.get('info'))
         except Exception as e:
-            self.logging.error("get closed deals failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get closed deals failed: " + str(e))
+        self.__lock.unlock()
         return closedDeals
 
     def getCapitalDetails(self, dateRange = 'thisSeason'):
@@ -1636,11 +1628,11 @@ class DarwinSim():
         """
         assetType = 'stock'
         capitalDetails = {}
-        if not self.lock.requestLock():
+        if not self.__lock.requestLock():
             return capitalDetails
 
         try:
-            cmd = asCmds.asgetCapitalDetailsSim + ' ' +  assetType + ' ' + dateRange
+            cmd = ascmds.asgetCapitalDetailsSim + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1657,15 +1649,15 @@ class DarwinSim():
                 while ls:
                     capitalDetails['data'].append([ls.pop(0) for x in range(length) if ls])
                 capitalDetails.update({'info': ''})
-                self.logging.info("get capital details successed")
+                self.__logging.info("get capital details successed")
             else:
                 capitalDetails.update({'comment': ''})
                 capitalDetails.update({'data': []})
                 capitalDetails.update({'info': ' '.join(ls)})
-                self.logging.error("get capital details failed: " + capitalDetails.get('info'))
+                self.__logging.error("get capital details failed: " + capitalDetails.get('info'))
         except Exception as e:
-            self.logging.error("get capital details failed: " + str(e))
-        self.lock.unlock()
+            self.__logging.error("get capital details failed: " + str(e))
+        self.__lock.unlock()
         return capitalDetails
 
     def liquidating(self):
@@ -1692,10 +1684,10 @@ class DarwinSim():
                         time.sleep(8)
                     else:
                         # when l is empty
-                        self.logging.info("liquidating successed")
+                        self.__logging.info("liquidating successed")
                         return True
         except Exception as e:
-            self.logging.error("liquidating failed: " + str(e))
+            self.__logging.error("liquidating failed: " + str(e))
         return False
 
     def entrustPortfolio(self, stockCodeAmountPriceList = []):
@@ -1711,9 +1703,9 @@ class DarwinSim():
             for stockCode, amount, price in stockCodeAmountPriceList:
                 status, contractNo = self.issuingEntrust(stockCode=stockCode, amount=amount, price=price, tradingAction="buy")
                 statuslist.append({'stockCode': stockCode, 'status': status, 'contractNo': contractNo})
-            self.logging.info("entrust protfolio successed")
+            self.__logging.info("entrust protfolio successed")
         except Exception as e:
-            self.logging.error("entrust portfolio failed: " + str(e))
+            self.__logging.error("entrust portfolio failed: " + str(e))
             for stockCode, amount, price in stockCodeAmountPriceList:
                 statuslist.append({'stockCode': stockCode, 'status': 'failed', 'contractNo': None})
         return statuslist
@@ -1747,20 +1739,20 @@ def __test_Service():
     time.sleep(1)
 
 
-def __test_Darwin():
+def __test_Evolving():
     service = Service()
 
     # status = service.loginClient()
     # print(status)
 
-    dw = Darwin()
+    dw = Evolving()
     dw.keepInformed = True
 
     # status = dw.isBrokerLoggedIn()
     # print(status)
 
-    # status = dw.loginBroker()
-    # print(status)
+    status = dw.loginBroker()
+    print(status)
 
     # status = dw.isBrokerLoggedIn()
     # print(status)
@@ -2001,7 +1993,7 @@ def __test_Simulation():
 
     # time.sleep(3)
 
-    dws = DarwinSim()
+    dws = EvolvingSim()
 
     # simulationAccountInfo = dws.getAccountInfo()
     # show(simulationAccountInfo)
@@ -2069,8 +2061,7 @@ def __test_Simulation():
 if __name__== "__main__":
     # __test_Service()
 
-    # __test_Darwin()
+    __test_Evolving()
 
-    __test_Simulation()
-
+    # __test_Simulation()
 
