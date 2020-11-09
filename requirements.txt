@@ -1,0 +1,12 @@
+TA-Lib
+akshare
+ipython
+matplotlib==3.2.2
+pandas
+scipy
+numpy
+requests
+pymongo
+beautifulsoup4
+getpass
+python-crontab

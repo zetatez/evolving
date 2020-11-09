@@ -1,0 +1,24 @@
+2020-10-10 00:04:25,462 INFO get account info successed
+2020-10-10 00:04:29,471 INFO issuing entrust successed: buy stock 002241 37.01 100 contractNo 1740352679
+2020-10-10 00:04:33,626 INFO issuing entrust successed: buy stock 600196 60.01 100 contractNo 1740394424
+2020-10-10 00:04:37,821 INFO issuing entrust successed: buy stock 600196 None 100 contractNo 1740272948
+2020-10-10 00:04:41,806 ERROR issuing entrust failed: sell stock 600196 61.81 100. Err: -1 警告 股票余额不足，不允许卖空
+2020-10-10 00:04:45,889 ERROR issuing entrust failed: sell stock 002241 40.01 200. Err: -1 警告 股票余额不足，不允许卖空
+2020-10-10 00:04:49,806 ERROR issuing entrust failed: sell stock 002241 None 200. Err: -1 警告 股票余额不足，不允许卖空
+2020-10-10 00:04:51,872 INFO revoke entrust successed: allBuyAndSell stock None
+2020-10-10 00:04:53,615 INFO revoke entrust successed: allBuy stock None
+2020-10-10 00:04:55,130 INFO revoke entrust successed: allSell stock None
+2020-10-10 00:04:56,601 INFO revoke entrust successed: contractNo stock 1670247753
+2020-10-10 00:04:58,311 INFO get holding shares successed
+2020-10-10 00:05:00,700 INFO get entrust successed
+2020-10-10 00:05:03,195 INFO get entrust successed
+2020-10-10 00:05:05,544 INFO get closed deals successed
+2020-10-10 00:05:08,039 INFO get closed deals successed
+2020-10-10 00:05:10,650 INFO get capital details successed
+2020-10-10 00:05:13,285 INFO get capital details successed
+2020-10-10 00:05:15,721 INFO revoke entrust successed: allBuyAndSell stock None
+2020-10-10 00:05:17,804 INFO get holding shares successed
+2020-10-10 00:05:17,804 INFO liquidating successed
+2020-10-10 00:05:22,748 INFO issuing entrust successed: buy stock 512290 2.169 1000 contractNo 1740333886
+2020-10-10 00:05:27,327 INFO issuing entrust successed: buy stock 512290 None 1000 contractNo 1740439057
+2020-10-10 00:05:27,327 INFO entrust protfolio successed

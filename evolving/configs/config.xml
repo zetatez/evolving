@@ -1,0 +1,25 @@
+<darwin>
+	<trading>
+		<userid>15121137495</userid>
+		<password>wsy829jjy127</password>
+		<broker_code>PAZQ</broker_code>
+		<broker_account>325319118391</broker_account>
+		<broker_password>090212</broker_password>
+		<bank_name>工商银行</bank_name>
+		<bank_account>6222021001148740308</bank_account>
+		<bank_password>112173</bank_password>
+	</trading>
+	<email>
+		<mail_host>smtp.163.com</mail_host>
+		<mail_sender>fincompleteness@163.com</mail_sender>
+		<mail_license>SNRRQHKFKEUNNSFT</mail_license>
+		<mail_receivers>fincompleteness@163.com</mail_receivers>
+	</email>
+	<db>
+		<db>MongoDB</db>
+		<host>127.0.0.1</host>
+		<port>27017</port>
+		<user>root</user>
+		<password>passw0rd</password>
+	</db>
+</darwin>

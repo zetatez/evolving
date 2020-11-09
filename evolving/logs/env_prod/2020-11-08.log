@@ -1,0 +1,182 @@
+2020-11-08 15:49:25,881 INFO login broker: successed
+2020-11-08 15:49:51,714 INFO get account info successed
+2020-11-08 15:50:17,384 ERROR transfer failed: broker2bank 1000. Err: 警告:外部机构[5200]不支持7*24银证业务
+2020-11-08 15:50:29,378 ERROR transfer failed: bank2broker 1000. Err: 警告:外部机构[5200]不支持7*24银证业务
+2020-11-08 15:51:16,769 ERROR transfer failed: broker2bank 10000. Err: 警告:外部机构[5200]不支持7*24银证业务
+2020-11-08 15:51:19,990 ERROR transfer failed: bank2broker 10000. Err: 警告:外部机构[5200]不支持7*24银证业务
+2020-11-08 16:19:53,277 INFO get transfer records successed
+2020-11-08 16:20:26,411 INFO get transfer records successed
+2020-11-08 16:21:08,796 INFO get bids successed
+2020-11-08 16:21:10,177 INFO get bids successed
+2020-11-08 16:21:40,750 INFO get bids successed
+2020-11-08 16:21:42,486 INFO get bids successed
+2020-11-08 16:21:58,135 INFO get bids successed
+2020-11-08 16:22:00,139 INFO get bids successed
+2020-11-08 16:22:07,941 INFO get bids successed
+2020-11-08 16:22:09,645 ERROR get bids failed: unknown err
+2020-11-08 16:22:22,197 INFO get bids successed
+2020-11-08 16:22:24,177 INFO get bids successed
+2020-11-08 18:29:11,448 ERROR issuing entrust failed: buy stock 002241 37.01 100. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 18:29:16,535 ERROR issuing entrust failed: sell stock 002241 40.01 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:29:21,322 ERROR issuing entrust failed: buy stock 002241 None 100. Err: -1 警告 资金可用数不足
+2020-11-08 18:29:26,194 ERROR issuing entrust failed: sell stock 002241 None 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:29:58,421 ERROR issuing entrust failed: buy sciTech 688050 220.01 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 18:30:03,241 ERROR issuing entrust failed: sell sciTech 688050 225.01 200. Err: -1 警告 股份信息[加载:325319118391 A639487384 1688050 0 43603]不存在
+2020-11-08 18:30:07,962 ERROR issuing entrust failed: buy sciTech 688050 None 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 18:30:12,515 ERROR issuing entrust failed: sell sciTech 688050 None 200. Err: -1 警告 股份信息[加载:325319118391 A639487384 1688050 0 43603]不存在
+2020-11-08 18:30:33,933 ERROR issuing entrust failed: buy gem 300474 72.54 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:30:38,470 ERROR issuing entrust failed: sell gem 300474 78.41 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:30:43,313 ERROR issuing entrust failed: buy gem 300474 None 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:30:48,545 ERROR issuing entrust failed: sell gem 300474 None 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:31:19,408 ERROR issuing entrust failed: buy stock 002241 None 100. Err: unknown err
+2020-11-08 18:31:24,275 ERROR issuing entrust failed: buy stock 002241 37.01 100. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 18:31:29,113 ERROR issuing entrust failed: buy sciTech 688050 220.01 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 18:31:33,899 ERROR issuing entrust failed: buy gem 300474 72.54 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:32:17,619 ERROR issuing entrust failed: sell stock 002241 None 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:32:22,540 ERROR issuing entrust failed: sell stock 002241 37.01 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:32:27,511 ERROR issuing entrust failed: sell sciTech 688050 220.01 200. Err: -1 警告 股份信息[加载:325319118391 A639487384 1688050 0 43603]不存在
+2020-11-08 18:32:32,598 ERROR issuing entrust failed: sell gem 300474 72.54 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:33:16,152 ERROR issuing entrust failed: buy stock 002241 37.01 100. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 18:33:21,120 ERROR issuing entrust failed: sell stock 002241 40.01 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:33:24,087 ERROR issuing entrust failed: buy stock 002241 None 100. Err: unknown err
+2020-11-08 18:33:28,978 ERROR issuing entrust failed: sell stock 002241 None 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:33:52,965 ERROR issuing entrust failed: buy stock 002241 37.01 100. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 18:33:57,852 ERROR issuing entrust failed: sell stock 002241 40.01 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:34:02,540 ERROR issuing entrust failed: buy stock 002241 None 100. Err: -1 警告 资金可用数不足
+2020-11-08 18:34:07,527 ERROR issuing entrust failed: sell stock 002241 None 100. Err: -1 警告 股份信息[加载:325319118391 0277525271 2241 0 007056]不存在
+2020-11-08 18:34:47,894 ERROR issuing entrust failed: buy sciTech 688050 225.01 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 18:34:52,765 ERROR issuing entrust failed: sell sciTech 688050 220.01 200. Err: -1 警告 股份信息[加载:325319118391 A639487384 1688050 0 43603]不存在
+2020-11-08 18:34:57,689 ERROR issuing entrust failed: buy sciTech 688050 None 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 18:35:02,906 ERROR issuing entrust failed: sell sciTech 688050 None 200. Err: -1 警告 股份信息[加载:325319118391 A639487384 1688050 0 43603]不存在
+2020-11-08 18:35:18,686 ERROR issuing entrust failed: buy gem 300474 72.54 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:35:23,807 ERROR issuing entrust failed: sell gem 300474 78.41 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:35:28,827 ERROR issuing entrust failed: buy gem 300474 None 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:35:33,998 ERROR issuing entrust failed: sell gem 300474 None 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:37:09,461 ERROR issuing entrust failed: buy gem 300474 72.54 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:37:14,448 ERROR issuing entrust failed: sell gem 300474 78.41 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:37:19,453 ERROR issuing entrust failed: buy gem 300474 None 200. Err: -1 警告 客户[200721958]尚未开通创业板，不允许创业板交易
+2020-11-08 18:37:24,624 ERROR issuing entrust failed: sell gem 300474 None 200. Err: -1 警告 股份信息[加载:325319118391 0277525271 300474 0 007056]不存在
+2020-11-08 18:41:00,779 INFO get today IPO successed
+2020-11-08 18:41:44,781 INFO auto IPO successed
+2020-11-08 18:41:57,670 INFO auto IPO successed
+2020-11-08 18:42:19,894 INFO auto IPO successed
+2020-11-08 18:42:42,174 INFO revoke entrust successed: allBuyAndSell stock None. Info: nothing to revoke
+2020-11-08 18:42:44,492 INFO revoke entrust successed: allBuy stock None. Info: nothing to revoke
+2020-11-08 18:42:47,016 INFO revoke entrust successed: allSell stock None. Info: nothing to revoke
+2020-11-08 18:43:00,710 INFO revoke entrust successed: allBuyAndSell stock None. Info: nothing to revoke
+2020-11-08 18:43:03,486 INFO revoke entrust successed: allBuy stock None. Info: nothing to revoke
+2020-11-08 18:43:06,083 INFO revoke entrust successed: allSell stock None. Info: nothing to revoke
+2020-11-08 18:43:21,620 INFO revoke entrust successed: contractNo stock N8536587. Info: nothing to revoke
+2020-11-08 18:44:06,668 INFO revoke all entrust successed
+2020-11-08 18:44:10,761 INFO revoke all sell entrust successed
+2020-11-08 18:44:14,620 INFO revoke all buy entrust successed
+2020-11-08 18:44:27,529 INFO get holding shares successed
+2020-11-08 18:45:05,845 INFO get holding shares successed
+2020-11-08 18:45:35,295 INFO get holding shares successed
+2020-11-08 18:45:37,397 INFO get holding shares successed
+2020-11-08 18:45:39,456 INFO get holding shares successed
+2020-11-08 18:46:38,091 INFO get entrust successed
+2020-11-08 18:48:49,719 INFO get entrust successed
+2020-11-08 18:49:26,477 INFO get entrust successed
+2020-11-08 18:49:28,902 INFO get entrust successed
+2020-11-08 18:49:31,300 INFO get entrust successed
+2020-11-08 18:52:27,114 INFO get entrust successed
+2020-11-08 18:52:29,678 INFO get entrust successed
+2020-11-08 18:52:32,103 INFO get entrust successed
+2020-11-08 18:52:45,395 INFO get entrust successed
+2020-11-08 18:53:43,108 INFO get entrust successed
+2020-11-08 18:54:16,630 INFO get entrust successed
+2020-11-08 18:54:29,454 INFO get entrust successed
+2020-11-08 18:55:14,112 INFO get entrust successed
+2020-11-08 18:55:16,621 INFO get entrust successed
+2020-11-08 18:55:19,259 INFO get entrust successed
+2020-11-08 18:55:21,871 INFO get entrust successed
+2020-11-08 18:55:51,387 INFO get closed deals successed
+2020-11-08 18:56:04,598 INFO get closed deals successed
+2020-11-08 18:56:18,101 INFO get capital details successed
+2020-11-08 18:56:35,324 INFO get closed deals successed
+2020-11-08 18:56:37,961 INFO get closed deals successed
+2020-11-08 18:57:04,672 INFO get closed deals successed
+2020-11-08 18:57:07,429 INFO get closed deals successed
+2020-11-08 18:57:39,659 INFO get capital details successed
+2020-11-08 18:58:21,279 INFO get capital details successed
+2020-11-08 18:58:36,463 INFO get IPO failed successed: entrust today
+2020-11-08 18:58:46,351 ERROR get IPO failed: entrust thisWeek. Err: <queryType> entrust only supports <dateRange> today
+2020-11-08 18:58:59,030 ERROR get IPO failed: entrust thisWeek. Err: <queryType> entrust only supports <dateRange> today
+2020-11-08 18:59:21,989 INFO get IPO failed successed: entrust today
+2020-11-08 18:59:23,671 ERROR get IPO failed: entrust thisWeek. Err: <queryType> entrust only supports <dateRange> today
+2020-11-08 18:59:49,901 INFO get IPO failed successed: entrust today
+2020-11-08 18:59:51,394 ERROR get IPO failed: entrust thisWeek. Err: <queryType> entrust only supports <dateRange> today
+2020-11-08 18:59:53,430 INFO get IPO failed successed: allotmentNo thisMonth
+2020-11-08 18:59:55,449 INFO get IPO failed successed: winningLots thisSeason
+2020-11-08 19:00:49,623 INFO get IPO failed successed: entrust today
+2020-11-08 19:01:29,896 INFO revoke all entrust successed
+2020-11-08 19:01:33,672 INFO get holding shares successed
+2020-11-08 19:01:35,693 INFO get holding shares successed
+2020-11-08 19:01:37,747 INFO get holding shares successed
+2020-11-08 19:01:37,748 ERROR liquidating failed: list index out of range
+2020-11-08 19:01:54,454 INFO revoke all entrust successed
+2020-11-08 19:01:57,025 INFO get holding shares successed
+2020-11-08 19:01:59,420 INFO get holding shares successed
+2020-11-08 19:02:01,604 INFO get holding shares successed
+2020-11-08 19:02:01,605 ERROR liquidating failed: list index out of range
+2020-11-08 19:03:08,890 INFO revoke all entrust successed
+2020-11-08 19:03:11,802 INFO get holding shares successed
+2020-11-08 19:03:14,297 INFO get holding shares successed
+2020-11-08 19:03:16,781 INFO get holding shares successed
+2020-11-08 19:03:16,782 ERROR liquidating failed: list index out of range
+2020-11-08 19:04:40,060 INFO revoke all entrust successed
+2020-11-08 19:04:42,869 INFO get holding shares successed
+2020-11-08 19:04:45,413 INFO get holding shares successed
+2020-11-08 19:04:47,872 INFO get holding shares successed
+2020-11-08 19:04:47,873 ERROR liquidating failed: list index out of range
+2020-11-08 19:08:32,493 INFO get holding shares successed
+2020-11-08 19:09:06,042 INFO get holding shares successed
+2020-11-08 19:11:50,990 INFO get holding shares successed
+2020-11-08 19:12:28,815 INFO get holding shares successed
+2020-11-08 19:12:31,432 INFO get holding shares successed
+2020-11-08 19:12:33,959 INFO get holding shares successed
+2020-11-08 19:13:01,862 INFO get holding shares successed
+2020-11-08 19:13:04,593 INFO get holding shares successed
+2020-11-08 19:13:07,123 INFO get holding shares successed
+2020-11-08 19:14:49,793 INFO get entrust successed
+2020-11-08 19:16:54,051 INFO get holding shares successed
+2020-11-08 19:16:56,574 INFO get holding shares successed
+2020-11-08 19:16:59,218 INFO get holding shares successed
+2020-11-08 19:17:39,316 INFO get entrust successed
+2020-11-08 19:17:42,320 INFO get entrust successed
+2020-11-08 19:17:44,929 INFO get entrust successed
+2020-11-08 19:18:00,214 INFO get closed deals successed
+2020-11-08 19:18:03,285 INFO get closed deals successed
+2020-11-08 19:18:34,230 INFO get capital details successed
+2020-11-08 19:18:36,950 INFO get capital details successed
+2020-11-08 19:19:08,118 INFO get IPO failed successed: entrust today
+2020-11-08 19:19:23,898 INFO get IPO failed successed: allotmentNo thisMonth
+2020-11-08 19:19:26,251 INFO get IPO failed successed: winningLots thisSeason
+2020-11-08 19:20:46,524 INFO revoke all entrust successed
+2020-11-08 19:20:49,744 INFO get holding shares successed
+2020-11-08 19:20:52,424 INFO get holding shares successed
+2020-11-08 19:20:55,006 INFO get holding shares successed
+2020-11-08 19:20:55,007 INFO liquidating successed
+2020-11-08 19:21:23,525 INFO revoke all entrust successed
+2020-11-08 19:21:26,285 INFO get holding shares successed
+2020-11-08 19:21:29,041 INFO get holding shares successed
+2020-11-08 19:21:31,695 INFO get holding shares successed
+2020-11-08 19:21:31,696 INFO liquidating successed
+2020-11-08 19:22:37,423 ERROR issuing entrust failed: buy stock 512290 2.169 1000. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 19:22:37,919 INFO entrust buy successed
+2020-11-08 19:22:42,944 ERROR issuing entrust failed: buy stock 512290 2.171 1000. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 19:22:43,253 INFO entrust buy successed
+2020-11-08 19:22:48,582 ERROR issuing entrust failed: buy sciTech 688050 225.01 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:22:49,001 INFO entrust buy successed
+2020-11-08 19:23:22,011 ERROR issuing entrust failed: buy stock 512290 2.169 1000. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 19:23:22,375 INFO entrust buy successed
+2020-11-08 19:23:27,648 ERROR issuing entrust failed: buy stock 512290 2.171 1000. Err: -1 警告 委托价超过涨跌幅
+2020-11-08 19:23:27,981 INFO entrust buy successed
+2020-11-08 19:23:33,419 ERROR issuing entrust failed: buy sciTech 688050 225.01 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:23:33,733 INFO entrust buy successed
+2020-11-08 19:23:56,188 ERROR issuing entrust failed: buy sciTech 688050 209.90 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:26:07,547 ERROR issuing entrust failed: buy sciTech 688050 209.90 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:26:18,206 ERROR issuing entrust failed: buy sciTech 688050 209.90 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:26:26,029 ERROR issuing entrust failed: buy sciTech 688050 209.90 200. Err: -1 警告 客户[200721958]尚未开通科创板，不允许科创板交易
+2020-11-08 19:27:01,417 INFO revoke all entrust successed
