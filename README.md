@@ -3,6 +3,14 @@ Trading engine `evolving`. Only Mac OSX is supported.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
+## AUTHOR
+Lorenzo ©
+
+**evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.<br>
+
+Blog [@Lorenzo](https://Lorenzo.com)
+
+
 
 ## INSTALLATION GUIDE
 1. PROJECT STRUCTURE
