@@ -1,4 +1,7 @@
 # Evolving
+
+[![Join the chat at https://gitter.im/zetatez-evolving/evolving](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Trading engine `evolving`. Only Mac OSX is supported.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
