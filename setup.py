@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="evolving",
-    version="0.1.3",
+    version="0.1.6",
     author="Lorenzo",
     author_email="zetatez@icloud.com",
     description="trading api",
@@ -22,3 +22,6 @@ setuptools.setup(
     ],
     python_requires='>=3.8',
 )
+
+# python setup.py sdist bdist_wheel
+# twine upload dist/*

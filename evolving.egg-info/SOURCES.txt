@@ -10,3 +10,6 @@ evolving.egg-info/SOURCES.txt
 evolving.egg-info/dependency_links.txt
 evolving.egg-info/requires.txt
 evolving.egg-info/top_level.txt
+tests/__init__.py
+tests/evolving.py
+tests/helper.py
