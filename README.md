@@ -11,8 +11,6 @@ Trading engine `evolving`. Only Mac OSX is supported.
 [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 
-
-
 ## INSTALLATION GUIDE
 1. PROJECT STRUCTURE
     ```bash
