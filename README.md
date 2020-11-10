@@ -1,5 +1,5 @@
-# EVOLVING
-TRADING ENGINE `evolving`. Mac OSX ONLY.
+# evolving
+Trading engine `evolving`. Only Mac OSX is supported.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
@@ -8,24 +8,24 @@ TRADING ENGINE `evolving`. Mac OSX ONLY.
 - PROJECT STRUCTURE
 ```bash
 tree evolving 
-    # evolving
-    # ├── LICENSE
-    # ├── README.md
-    # ├── evolving
-    # │   ├── __init__.py
-    # │   ├── ascmds.py
-    # │   ├── evolving.py
-    # │   └── helper.py
-    # ├── requirements.txt
-    # ├── setup.py
-    # └── tests
-    #     ├── __init__.py
-    #     ├── evolving.py
-    #     └── helper.py
+    evolving
+    ├── LICENSE
+    ├── README.md
+    ├── evolving
+    │   ├── __init__.py
+    │   ├── ascmds.py
+    │   ├── evolving.py
+    │   └── helper.py
+    ├── requirements.txt
+    ├── setup.py
+    └── tests
+        ├── __init__.py
+        ├── evolving.py
+        └── helper.py
 
 tree ~/.config/evolving
-    # ~/.config/evolving
-    # └── config.xml
+    ~/.config/evolving
+    └── config.xml
 ```
 
 - REQUIREMENTS

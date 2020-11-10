@@ -12,7 +12,7 @@ setuptools.setup(
     description="trading api",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/zetatez/darwin',
+    url='https://github.com/zetatez/evolving',
     packages=setuptools.find_packages(),
     install_requires=["requests"],
     classifiers=[
