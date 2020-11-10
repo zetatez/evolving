@@ -34,20 +34,21 @@ tree ~/.config/evolving
 - DEPENDENCIES
 ```bash
 brew install cliclick
-
 cliclick -V             # cliclick 4.0.1, 2018-04-10
 which cliclick          # /usr/local/bin/cliclick
+
+pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
 ```
 
-- Building evolving from pip
+- Building `evolving` from pip
 ```bash
+
 pip install evolving
 ```
 
-- Building evolving from source
+- Building `evolving` from source
 ```bash
-cd; git clone git@github.com:zetatez/evolving.git; cd evolving; pip install -r requirements.txt
-python setup.py install
+git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install
 ```
     
 - CONFIGURATION
