@@ -5,7 +5,7 @@ Trading engine `evolving`. Only Mac OSX is supported.
 
 
 ## INSTALLATION GUIDE
-- PROJECT STRUCTURE
+1. PROJECT STRUCTURE
     ```bash
     tree evolving 
         evolving
@@ -28,10 +28,10 @@ Trading engine `evolving`. Only Mac OSX is supported.
         └── config.xml
     ```
 
-- REQUIREMENTS
-    python >= 3.8.5
+2. REQUIREMENTS
+    - python >= 3.8.5
 
-- DEPENDENCIES
+3. DEPENDENCIES
     ```bash
     brew install cliclick
     cliclick -V             # cliclick 4.0.1, 2018-04-10
@@ -40,6 +40,7 @@ Trading engine `evolving`. Only Mac OSX is supported.
     pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
     ```
 
+4. INSTALLATION
 - Building `evolving` from pip
     ```bash
     pip install evolving
@@ -47,10 +48,10 @@ Trading engine `evolving`. Only Mac OSX is supported.
 
 - Building `evolving` from source
     ```bash
-    git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install
+    git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install; rm -rf ~/evolving
     ```
     
-- CONFIGURATION
+5. CONFIGURATION
     ```bash
     mkdir -p ~/.config/evolving
 
@@ -78,7 +79,6 @@ Trading engine `evolving`. Only Mac OSX is supported.
 
 ## GET START WITH `evolving`
     ```python
-
     import evolving.evolving as evo
     from pprint import pprint as show
 
@@ -314,7 +314,6 @@ Trading engine `evolving`. Only Mac OSX is supported.
 
     s.logoutClient()
     ```
-
 
 ## API
 - Service
