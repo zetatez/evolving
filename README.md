@@ -4,11 +4,12 @@ Trading engine `evolving`. Only Mac OSX is supported.
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
 ## AUTHOR
-Lorenzo ©
 
 **evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.<br>
 
-Blog [@Lorenzo](https://Lorenzo.com)
+
+[![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 
 
 
