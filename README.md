@@ -4,7 +4,7 @@ This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
 ## Author
-**evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.
+[`evolving`](https://github.com/zetatez/evolving) © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.
 
 ## Get in touch!
 
