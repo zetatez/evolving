@@ -1,4 +1,4 @@
-# Welcome to evolving !
+# Welcome to the evolving !
 This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the Mac OSX system.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
@@ -106,3 +106,4 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at zetatez@icloud.com.
 
 - A brief tutorial can be found at [wiki](https://github.com/zetatez/evolving/wiki).
+
