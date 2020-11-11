@@ -51,7 +51,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
     ```
 
-3. INSTALLATION
+3. Installation
 - Building `evolving` from pip
     ```bash
     pip install evolving
