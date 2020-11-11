@@ -492,7 +492,7 @@ on run {transferType, amount, bank_pwd, trade_pwd}
 	transfer(transferType, amount, bank_pwd, trade_pwd)
 	
 	-- ex
-	-- osascript transfer.scpt bank2broker 100 112173 xxxx
+	-- osascript transfer.scpt bank2broker 100 123456 xxxx
 end run
 '"""
 

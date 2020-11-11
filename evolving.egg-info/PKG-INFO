@@ -2,345 +2,344 @@ Metadata-Version: 2.1
 Name: evolving
 Version: 0.1.6
 Summary: trading api
-Home-page: https://github.com/zetatez/darwin
+Home-page: https://github.com/zetatez/evolving
 Author: Lorenzo
 Author-email: zetatez@icloud.com
 License: UNKNOWN
-Description: # EVOLVING
-        TRADING ENGINE `evolving`. Mac OSX ONLY.
+Description: # Welcome to `evolving` !
+        This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the Mac OSX system.
         
         <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
         
+        ## Author
+        [`evolving`](https://github.com/zetatez/evolving) © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.
         
-        ## INSTALLATION GUIDE
-        - PROJECT STRUCTURE
-        ```bash
-        tree evolving 
-            # evolving
-            # ├── LICENSE
-            # ├── README.md
-            # ├── evolving
-            # │   ├── __init__.py
-            # │   ├── ascmds.py
-            # │   ├── evolving.py
-            # │   └── helper.py
-            # ├── requirements.txt
-            # ├── setup.py
-            # └── tests
-            #     ├── __init__.py
-            #     ├── evolving.py
-            #     └── helper.py
+        ## Get in touch!
         
-        tree ~/.config/evolving
-            # ~/.config/evolving
-            # └── config.xml
-        ```
+        In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)
         
-        - REQUIREMENTS
-            python >= 3.8.5
+        [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
         
-        - DEPENDENCIES
-        ```bash
-        brew install cliclick
+        ## How to contribute
+        To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
         
-        cliclick -V             # cliclick 4.0.1, 2018-04-10
-        which cliclick          # /usr/local/bin/cliclick
-        ```
+        ## Repo structure
+            ```bash
+            tree evolving
+                evolving
+                ├── LICENSE
+                ├── README.md
+                │   ├── ascmds.py
+                │   ├── evolving.py
+                │   └── helper.py
+                ├── requirements.txt
+                ├── setup.py
+                └── tests
+                    ├── __init__.py
+                    ├── evolving.py
+                    └── helper.py
         
-        - Building evolving from pip
-        ```bash
-        pip install evolving
-        ```
+            tree ~/.config/evolving
+                ~/.config/evolving
+                └── config.xml
+            ```
         
-        - Building evolving from source
-        ```bash
-        cd; git clone git@github.com:zetatez/evolving.git; cd evolving; pip install -r requirements.txt
-        python setup.py install
-        ```
+        ## Installation guide
+        1. Requirements
+            - python >= 3.8.5
+        
+        2. Dependencies
+            ```bash
+            brew install cliclick
+            cliclick -V             # cliclick 4.0.1, 2018-04-10
+            which cliclick          # /usr/local/bin/cliclick
+        
+            pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
+            ```
+        
+        3. Installation
+        - Building `evolving` from pip
+            ```bash
+            pip install evolving
+            ```
+        
+        - Building `evolving` from source
+            ```bash
+            git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install; rm -rf ~/evolving
+            ```
             
-        - CONFIGURATION
-        ```bash
-        mkdir -p ~/.config/evolving
+        4. Configuration
+            ```bash
+            mkdir -p ~/.config/evolving
         
-        echo """
-        <evolving>
-            <trading>
-                <userid>77777777777</userid>
-                <password>123456</password>
-                <broker_code>PAZQ</broker_code>
-                <broker_account>66666666</broker_account>
-                <broker_password>123456</broker_password>
-                <bank_name>工商银行</bank_name>
-                <bank_account>666666666666666666</bank_account>
-                <bank_password>123456</bank_password>
-            </trading>
-            <mail>
-                <mail_host>smtp.163.com</mail_host>
-                <mail_sender>mailAddress@163.com</mail_sender>
-                <mail_license>SNRRQOKFKEUNNSFT</mail_license>
-                <mail_receivers>mailAddress@163.com</mail_receivers>
-            </mail>
-        </evolving>
-        """ > ~/.config/evolving/config.xml
-        ```
+            echo """
+            <evolving>
+                <trading>
+                    <userid>77777777777</userid>
+                    <password>123456</password>
+                    <broker_code>PAZQ</broker_code>
+                    <broker_account>66666666</broker_account>
+                    <broker_password>123456</broker_password>
+                    <bank_name>工商银行</bank_name>
+                    <bank_account>666666666666666666</bank_account>
+                    <bank_password>123456</bank_password>
+                </trading>
+                <mail>
+                    <mail_host>smtp.163.com</mail_host>
+                    <mail_sender>mailAddress@163.com</mail_sender>
+                    <mail_license>SNRRQOKFKEUNNSFT</mail_license>
+                    <mail_receivers>mailAddress@163.com</mail_receivers>
+                </mail>
+            </evolving>
+            """ > ~/.config/evolving/config.xml
+            ```
         
-        ## GET START WITH `evolving`
-        ```python
+        ## Get start with `evolving`
+            ```python
+            import evolving.evolving as evo
+            from pprint import pprint as show
         
-        import evolving.evolving as evo
-        from pprint import pprint as show
+            s = evo.Service()
+            e = evo.Evolving()
         
-        s = evo.Service()
-        e = evo.Evolving()
+            status = s.loginClient()
+            print(status)
         
-        e.loginBroker()
+            e.keepInformed = True
         
-        status = s.loginClient()
-        print(status)
+            status = e.isBrokerLoggedIn()
+            print(status)
         
-        e.keepInformed = True
+            status = e.loginBroker()
+            print(status)
         
-        status = e.isBrokerLoggedIn()
-        print(status)
+            status = e.isBrokerLoggedIn()
+            print(status)
         
-        status = e.loginBroker()
-        print(status)
+            accountInfo = e.getAccountInfo()
+            show(accountInfo)
         
-        status = e.isBrokerLoggedIn()
-        print(status)
+            status = e.transfer(transferType = "bank2broker", amount = 1000)
+            show(status)
         
-        accountInfo = e.getAccountInfo()
-        show(accountInfo)
+            status = e.transfer(transferType = "broker2bank", amount = 1000)
+            show(status)
         
-        status = e.transfer(transferType = "bank2broker", amount = 1000)
-        show(status)
+            status = e.transfer_broker2bank(amount = 10000)
+            show(status)
         
-        status = e.transfer(transferType = "broker2bank", amount = 1000)
-        show(status)
+            status = e.transfer_bank2broker(amount = 10000)
+            show(status)
         
-        # status = e.transfer_broker2bank(amount = 10000)
-        # show(status)
+            transferRecords = e.getTransferRecords(dateRange = "thisYear")
+            show(transferRecords)
         
-        # status = e.transfer_bank2broker(amount = 10000)
-        # show(status)
+            bids = e.getBids(stockCode = "600030")
+            show(bids)
+            bids = e.getBids(stockCode = "600030", assetType = 'stock')
+            show(bids)
         
-        # transferRecords = e.getTransferRecords(dateRange = "thisYear")
-        # show(transferRecords)
+            bids = e.getBids(stockCode = "688055")
+            show(bids)
+            bids = e.getBids(stockCode = "688055", assetType = 'sciTech')
+            show(bids)
         
-        # bids = e.getBids(stockCode = "600030")
-        # show(bids)
+            bids = e.getBids(stockCode = "300750")
+            show(bids)
+            bids = e.getBids(stockCode = "300750", assetType = 'gem')
+            show(bids)
         
-        # bids = e.getBids(stockCode = "600030", assetType = 'stock')
-        # show(bids)
+            status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, price = 37.01, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, price = 40.01, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
         
-        # bids = e.getBids(stockCode = "688055")
-        # show(bids)
-        # bids = e.getBids(stockCode = "688055", assetType = 'sciTech')
-        # show(bids)
+            status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, price = 220.01, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, price = 225.01, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
         
-        # bids = e.getBids(stockCode = "300750", assetType = 'gem')
-        # show(bids)
-        # bids = e.getBids(stockCode = "300750")
-        # show(bids)
+            status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, price = 72.54, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, price = 78.41, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, tradingAction = 'buy')
+            show(status)
+            show(contractNo)
+            status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, tradingAction = 'sell')
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, price = 37.01, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, price = 40.01, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '002241', amount = 100, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
+            status, contractNo = e.buy(stockCode = '002241', amount = 100)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buy(stockCode = '002241', amount = 100, price = 37.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buy(stockCode = '688050', amount = 200, price = 220.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buy(stockCode = '300474', amount = 200, price = 72.54)
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, price = 220.01, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, price = 225.01, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '688050', amount = 200, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
+            status, contractNo = e.sell(stockCode = '002241', amount = 100)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sell(stockCode = '002241', amount = 100, price = 37.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sell(stockCode = '688050', amount = 200, price = 220.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sell(stockCode = '300474', amount = 200, price = 72.54)
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, price = 72.54, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, price = 78.41, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, tradingAction = 'buy')
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.issuingEntrust(stockCode = '300474', amount = 200, tradingAction = 'sell')
-        # show(status)
-        # show(contractNo)
+            status, contractNo = e.buyStock(stockCode = '002241', amount = 100, price = 37.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellStock(stockCode = '002241', amount = 100, price = 40.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buyStock(stockCode = '002241', amount = 100)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellStock(stockCode = '002241', amount = 100)
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.buy(stockCode = '002241', amount = 100)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buy(stockCode = '002241', amount = 100, price = 37.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buy(stockCode = '688050', amount = 200, price = 220.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buy(stockCode = '300474', amount = 200, price = 72.54)
-        # show(status)
-        # show(contractNo)
+            status, contractNo = e.buySciTech(stockCode = '688050', amount = 200, price = 225.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellSciTech(stockCode = '688050', amount = 200, price = 220.01)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buySciTech(stockCode = '688050', amount = 200)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellSciTech(stockCode = '688050', amount = 200)
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.sell(stockCode = '002241', amount = 100)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sell(stockCode = '002241', amount = 100, price = 37.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sell(stockCode = '688050', amount = 200, price = 220.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sell(stockCode = '300474', amount = 200, price = 72.54)
-        # show(status)
-        # show(contractNo)
+            status, contractNo = e.buyGem(stockCode = '300474', amount = 200, price = 72.54)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellGem(stockCode = '300474', amount = 200, price = 78.41)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.buyGem(stockCode = '300474', amount = 200)
+            show(status)
+            show(contractNo)
+            status, contractNo = e.sellGem(stockCode = '300474', amount = 200)
+            show(status)
+            show(contractNo)
         
-        # status, contractNo = e.buyStock(stockCode = '002241', amount = 100, price = 37.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellStock(stockCode = '002241', amount = 100, price = 40.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buyStock(stockCode = '002241', amount = 100)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellStock(stockCode = '002241', amount = 100)
-        # show(status)
-        # show(contractNo)
+            todayIPO = e.getTodayIPO()
+            show(todayIPO)
         
-        # status, contractNo = e.buySciTech(stockCode = '688050', amount = 200, price = 225.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellSciTech(stockCode = '688050', amount = 200, price = 220.01)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buySciTech(stockCode = '688050', amount = 200)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellSciTech(stockCode = '688050', amount = 200)
-        # show(status)
-        # show(contractNo)
+            status = e.oneKeyIPO()
+            print(status)
         
-        # status, contractNo = e.buyGem(stockCode = '300474', amount = 200, price = 72.54)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellGem(stockCode = '300474', amount = 200, price = 78.41)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.buyGem(stockCode = '300474', amount = 200)
-        # show(status)
-        # show(contractNo)
-        # status, contractNo = e.sellGem(stockCode = '300474', amount = 200)
-        # show(status)
-        # show(contractNo)
+            status = e.revokeEntrust(revokeType = "allBuyAndSell", assetType = "stock", contractNo = None)
+            show(status)
+            status = e.revokeEntrust(revokeType = "allBuy", assetType = "stock", contractNo = None)
+            show(status)
+            status = e.revokeEntrust(revokeType = "allSell", assetType = "stock", contractNo = None)
+            show(status)
         
-        # todayIPO = e.getTodayIPO()
-        # show(todayIPO)
+            status = e.revokeContractNoEntrust(assetType = "stock",  contractNo = "N8536587")
+            show(status)
         
-        # status = e.oneKeyIPO()
-        # print(status)
+            status = e.revokeAllEntrust()
+            show(status)
+            status = e.revokeAllBuyEntrust()
+            show(status)
+            status = e.revokeAllSellEntrust()
+            show(status)
         
-        # status = e.revokeEntrust(revokeType = "allBuyAndSell", assetType = "stock", contractNo = None)
-        # show(status)
-        # status = e.revokeEntrust(revokeType = "allBuy", assetType = "stock", contractNo = None)
-        # show(status)
-        # status = e.revokeEntrust(revokeType = "allSell", assetType = "stock", contractNo = None)
-        # show(status)
+            holdingShares = e.getHoldingShares(assetType = 'stock')
+            show(holdingShares)
         
-        # # note: brew install cliclick
-        # status = e.revokeContractNoEntrust(assetType = "stock",  contractNo = "N8536587")
-        # show(status)
+            allholdingShares = e.getAllHoldingShares()
+            show(allholdingShares)
         
-        # status = e.revokeAllEntrust()
-        # show(status)
-        # status = e.revokeAllBuyEntrust()
-        # show(status)
-        # status = e.revokeAllSellEntrust()
-        # show(status)
+            entrust = e.getEntrust(assetType = 'stock', dateRange = 'today', isRevocable = True)
+            show(entrust)
         
-        # holdingShares = e.getHoldingShares(assetType = 'stock')
-        # show(holdingShares)
+            entrust = e.getEntrust(assetType = 'stock', dateRange = 'today', isRevocable = False)
+            show(entrust)
         
-        # allholdingShares = e.getAllHoldingShares()
-        # show(allholdingShares)
+            entrust = e.getEntrust(assetType = 'stock', dateRange = 'thisWeek', isRevocable = False)
+            show(entrust)
+            print(len(entrust.get('data')))
         
-        # entrust = e.getEntrust(assetType = 'stock', dateRange = 'today', isRevocable = True)
-        # show(entrust)
+            entrust = e.getEntrust(assetType = 'stock', dateRange = 'thisYear', isRevocable = False)
+            show(entrust)
         
-        # entrust = e.getEntrust(assetType = 'stock', dateRange = 'today', isRevocable = False)
-        # show(entrust)
+            res = e.getTodayAllRevocableEntrust()
+            show(res)
         
-        # entrust = e.getEntrust(assetType = 'stock', dateRange = 'thisWeek', isRevocable = False)
-        # show(entrust)
-        # print(len(entrust.get('data')))
+            closedDeals = e.getClosedDeals(assetType = 'stock', dateRange = 'thisSeason')
+            show(closedDeals)
         
-        # entrust = e.getEntrust(assetType = 'stock', dateRange = 'thisYear', isRevocable = False)
-        # show(entrust)
+            closedDeals = e.getClosedDeals(assetType = 'stock', dateRange = 'today')
+            show(closedDeals)
         
-        # res = e.getTodayAllRevocableEntrust()
-        # show(res)
+            capitalDetails = e.getCapitalDetails(assetType = 'stock', dateRange = 'thisSeason')
+            show(capitalDetails)
         
-        # closedDeals = e.getClosedDeals(assetType = 'stock', dateRange = 'thisSeason')
-        # show(closedDeals)
+            capitalDetails = e.getCapitalDetails(assetType = 'stock', dateRange = 'today')
+            show(capitalDetails)
         
-        # closedDeals = e.getClosedDeals(assetType = 'stock', dateRange = 'today')
-        # show(closedDeals)
+            res = e.getIPO(queryType = "entrust", dateRange = "today")
+            show(res)
         
-        # capitalDetails = e.getCapitalDetails(assetType = 'stock', dateRange = 'thisSeason')
-        # show(capitalDetails)
+            res = e.getIPO(queryType = "allotmentNo", dateRange = "thisMonth")
+            show(res)
         
-        # capitalDetails = e.getCapitalDetails(assetType = 'stock', dateRange = 'today')
-        # show(capitalDetails)
+            res = e.getIPO(queryType = "winningLots", dateRange = "thisSeason")
+            show(res)
         
-        # res = e.getIPO(queryType = "entrust", dateRange = "today")
-        # show(res)
+            status = e.liquidating()
+            show(status)
         
-        # # this line will be fail
-        # res = e.getIPO(queryType = "entrust", dateRange = "thisWeek")
-        # show(res)
+            StockCodeAmountPriceList = [['512290', '1000', '2.169'], ['512290', '1000', '2.171'], ['688050', '200', '225.01']]
+            statusList = e.entrustPortfolio(StockCodeAmountPriceList)
+            show(statusList)
         
-        # res = e.getIPO(queryType = "allotmentNo", dateRange = "thisMonth")
-        # show(res)
+            status = e.revokeAllEntrust()
+            show(status)
         
-        # res = e.getIPO(queryType = "winningLots", dateRange = "thisSeason")
-        # show(res)
-        
-        # status = e.liquidating()
-        # show(status)
-        
-        # StockCodeAmountPriceList = [['512290', '1000', '2.169'], ['512290', '1000', '2.171'], ['688050', '200', '225.01']]
-        # statusList = e.entrustPortfolio(StockCodeAmountPriceList)
-        # show(statusList)
-        
-        # status = e.revokeAllEntrust()
-        # show(status)
-        
-        # s.logoutClient()
-        
-        
-        ```
-        
+            s.logoutClient()
+            ```
         
         ## API
-        - Service()
+        - Service
             - isClientLoggedIn()
             - loginClient()
             - logoutClient()
             - reLoginClient()
-        - Evolving()
+        
+        - Evolving
             - isBrokerLoggedIn()
             - loginBroker()
             - logoutBroker()
@@ -380,7 +379,18 @@ Description: # EVOLVING
             - liquidating()
             - entrustPortfolio(StockCodeAmountPriceList = [])
         
-        
+        - EvolvingSim
+            - getAccountInfo()
+            - issuingEntrust(stockCode, amount, price = None, tradingAction = 'buy')
+            - buy(stockCode, amount, price = None)
+            - sell(stockCode, amount, price = None)
+            - revokeEntrust(revokeType = "allBuyAndSell", contractNo = None)
+            - getHoldingShares()
+            - getEntrust(dateRange = 'today', isRevocable = True)
+            - getClosedDeals(dateRange = 'today')
+            - getCapitalDetails(dateRange = 'thisSeason')
+            - liquidating()
+            - entrustPortfolio(stockCodeAmountPriceList = [])
         
         
 Platform: UNKNOWN
