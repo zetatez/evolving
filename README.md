@@ -1,20 +1,21 @@
-# WELCOME TO `evolving` !
+# Welcome to `evolving` !
 This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the Mac OSX system.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
-## AUTHOR
+## Author
 **evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.
 
 ## Get in touch!
 
-In order to get in touch with the AUTHOR, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)
+In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)
+
 [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-## HOW TO CONTRIBUTE
+## How to contribute
 To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
 
-## REPO STRUCTURE
+## Repo structure
     ```bash
     tree evolving 
         evolving
@@ -37,11 +38,11 @@ To contribute in this repo, please open a [pull request](https://help.github.com
         └── config.xml
     ```
 
-## INSTALLATION GUIDE
-1. REQUIREMENTS
+## Installation guide
+1. Requirements
     - python >= 3.8.5
 
-2. DEPENDENCIES
+2. Dependencies
     ```bash
     brew install cliclick
     cliclick -V             # cliclick 4.0.1, 2018-04-10
@@ -61,7 +62,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install; rm -rf ~/evolving
     ```
     
-4. CONFIGURATION
+4. Configuration
     ```bash
     mkdir -p ~/.config/evolving
 
@@ -87,7 +88,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     """ > ~/.config/evolving/config.xml
     ```
 
-## GET START WITH `evolving`
+## Get start with `evolving`
     ```python
     import evolving.evolving as evo
     from pprint import pprint as show
