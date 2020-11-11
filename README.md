@@ -91,4 +91,4 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     - If you want to use the email notification module, you need to open a 163 email account.
     - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at [Email](zetatez@icloud.com).
 
-- [wiki](https://github.com/zetatez/evolving/wiki)
+- Brief tutorial can be found at [WIKI](https://github.com/zetatez/evolving/wiki)
