@@ -17,12 +17,10 @@ To contribute in this repo, please open a [pull request](https://help.github.com
 
 ## Repo structure
     ```bash
-    tree evolving 
+    tree evolving
         evolving
         ├── LICENSE
         ├── README.md
-        ├── evolving
-        │   ├── __init__.py
         │   ├── ascmds.py
         │   ├── evolving.py
         │   └── helper.py
