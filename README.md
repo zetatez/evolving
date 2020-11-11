@@ -86,4 +86,6 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     """ > ~/.config/evolving/config.xml
     ```
 
+## See wiki for more information
 
+- [wiki]()
