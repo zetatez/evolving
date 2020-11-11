@@ -1,18 +1,20 @@
-# Evolving
-Trading engine `evolving`. Only Mac OSX is supported.
+# WELCOME TO `evolving` !
+This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the Mac OSX system.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
 ## AUTHOR
+**evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.
 
-**evolving** © [Lorenzo](https://github.com/zetatez), Released under the [GPL 3.0](./LICENSE) License.<br>
+## Get in touch!
 
-
+In order to get in touch with the AUTHOR, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)
 [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+## HOW TO CONTRIBUTE
+To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
 
-## INSTALLATION GUIDE
-1. PROJECT STRUCTURE
+## REPO STRUCTURE
     ```bash
     tree evolving 
         evolving
@@ -35,10 +37,11 @@ Trading engine `evolving`. Only Mac OSX is supported.
         └── config.xml
     ```
 
-2. REQUIREMENTS
+## INSTALLATION GUIDE
+1. REQUIREMENTS
     - python >= 3.8.5
 
-3. DEPENDENCIES
+2. DEPENDENCIES
     ```bash
     brew install cliclick
     cliclick -V             # cliclick 4.0.1, 2018-04-10
@@ -47,7 +50,7 @@ Trading engine `evolving`. Only Mac OSX is supported.
     pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
     ```
 
-4. INSTALLATION
+3. INSTALLATION
 - Building `evolving` from pip
     ```bash
     pip install evolving
@@ -58,7 +61,7 @@ Trading engine `evolving`. Only Mac OSX is supported.
     git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install; rm -rf ~/evolving
     ```
     
-5. CONFIGURATION
+4. CONFIGURATION
     ```bash
     mkdir -p ~/.config/evolving
 
