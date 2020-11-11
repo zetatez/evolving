@@ -66,6 +66,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
 
     # Note: 
     # 1. You need to log in broker and bank account manually at least once.
+    # 2. If you want to use the email notification module, you need to open a 163 email account.
     echo """
     <evolving>
         <trading>
