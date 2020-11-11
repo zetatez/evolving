@@ -64,6 +64,8 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     ```bash
     mkdir -p ~/.config/evolving
 
+    # Note: 
+    # 1. You need to log in broker and bank account manually at least once.
     echo """
     <evolving>
         <trading>
@@ -85,6 +87,16 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     </evolving>
     """ > ~/.config/evolving/config.xml
     ```
+
+5. Authorization
+    - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
+        - [x] Terminal
+        - [x] your IDE, ex. sublime, vscode 
+        - [x] osascript
+    - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Full Disk Access
+        - [x] Terminal
+        - [x] your IDE, ex. sublime, vscode 
+        - [x] osascript
 
 ## For more information
 - Hint:
