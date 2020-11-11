@@ -66,7 +66,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
 
     # Note: 
     # 1. You need to log in broker and bank account manually at least once.
-    # 2. If you want to use the email notification module, you need to open a 163 email account.
+    # 2. If you want to use the email notification module, you need to register a 163 email account.
     echo """
     <evolving>
         <trading>
@@ -102,7 +102,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
 ## For more information
 - Hints:
     - You need to log in broker and bank account manually at least once.
-    - If you want to use the email notification module, you need to open a 163 email account.
+    - If you want to use the email notification module, you need to register a 163 email account.
     - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at zetatez@icloud.com.
 
 - A brief tutorial can be found at [wiki](https://github.com/zetatez/evolving/wiki).
