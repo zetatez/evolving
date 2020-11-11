@@ -88,14 +88,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
 
 ## For more information
 - Hint:
-    - Technically, there is no restriction on securities companies, but I didn't develop it all. If you don't find the broker you want, please contact me at [email](zetatez@icloud.com).
-
+    - If you want to use email notification module, you need to open a 163 email account.
+    - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at [email](zetatez@icloud.com).
 
 - [wiki](https://github.com/zetatez/evolving/wiki)
-
-From a technical point of view, there are no restrictions on securities companies
-
-
-
-
-
