@@ -131,6 +131,10 @@ class Service(object):
 class Base(metaclass = abc.ABCMeta):
     def __init__(self):
         self._config = helper.Config()
+        
+    @abc.abstractmethod
+    def isBrokerLoggedIn(self):
+        pass
 
     @abc.abstractmethod
     def loginBroker(self):
@@ -141,34 +145,7 @@ class Base(metaclass = abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def issuingEntrust(self):
-        pass
-
-    @abc.abstractmethod
-    def buyStock(self):
-        pass
-
-    @abc.abstractmethod
-    def sellStock(self):
-        pass
-
-    def buySciTech(self):
-        pass
-
-    @abc.abstractmethod
-    def sellSciTech(self):
-        pass
-
-    @abc.abstractmethod
-    def buyGem(self):
-        pass
-
-    @abc.abstractmethod
-    def sellGem(self):
-        pass
-
-    @abc.abstractmethod
-    def oneKeyIPO(self):
+    def getAccountInfo(self):
         pass
 
     @abc.abstractmethod
@@ -176,37 +153,20 @@ class Base(metaclass = abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def revokeEntrust(self):
+    def issuingEntrust(self):
         pass
 
     @abc.abstractmethod
-    def revokeAllEntrust(self):
+    def buy(self):
         pass
 
     @abc.abstractmethod
-    def revokeAllBuyEntrust(self):
+    def sell(self):
         pass
 
     @abc.abstractmethod
-    def revokeAllSellEntrust(self):
+    def oneKeyIPO(self):
         pass
-
-    @abc.abstractmethod
-    def getAccountInfo(self):
-        pass
-
-    @abc.abstractmethod
-    def getHoldingShares(self):
-        pass
-
-    @abc.abstractmethod
-    def getAllHoldingShares(self):
-        pass
-
-    @abc.abstractmethod
-    def getEntrust(self):
-        pass
-
 
 class Evolving(Base):
     """ Evolving: trading engine
@@ -1709,7 +1669,6 @@ class EvolvingSim():
             for stockCode, amount, price in stockCodeAmountPriceList:
                 statuslist.append({'stockCode': stockCode, 'status': 'failed', 'contractNo': None})
         return statuslist
-
 
 
 
