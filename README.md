@@ -127,11 +127,11 @@ tree ~/.config/evolving
 1. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
         - [x] Terminal
-        - [x] your IDE, ex. sublime, vscode 
+        - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Full Disk Access
         - [x] Terminal
-        - [x] your IDE, ex. sublime, vscode 
+        - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
 
 ## For more information

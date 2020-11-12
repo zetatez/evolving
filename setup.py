@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="evolving",
-    version="1.1.1",
+    version="1.1.2",
     author="Lorenzo",
     author_email="zetatez@icloud.com",
     description="trading api",
