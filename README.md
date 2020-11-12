@@ -89,7 +89,7 @@ tree ~/.config/evolving
     """ > ~/.config/evolving/config.xml
     ```
 
-    - Ex. of the config file `~/.config/evolving/config.xml`:
+    - Example of the config file `~/.config/evolving/config.xml`:
     ```xml
     <evolving>
             <trading>
