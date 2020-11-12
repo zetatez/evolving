@@ -151,5 +151,7 @@ tree ~/.config/evolving
         - <broker_code>ZJZQ</broker_code>       -- 中金证券
         - <broker_code>ZTZQ</broker_code>       -- 中泰证券
 
+        Note: For different brokers, the display might be different. That is to say, the code might need to be slightly adjusted according to the different brokers.
+
 - A brief tutorial can be found at [wiki](https://github.com/zetatez/evolving/wiki).
 
