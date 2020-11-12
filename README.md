@@ -16,25 +16,25 @@ In order to get in touch with the author, join [Gitter](https://badges.gitter.im
 To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
 
 ## Repo structure
-    ```bash
-    tree evolving
-        evolving
-        ├── LICENSE
-        ├── README.md
-        │   ├── ascmds.py
-        │   ├── evolving.py
-        │   └── helper.py
-        ├── requirements.txt
-        ├── setup.py
-        └── tests
-            ├── __init__.py
-            ├── evolving.py
-            └── helper.py
+```bash
+tree evolving
+    evolving
+    ├── LICENSE
+    ├── README.md
+    │   ├── ascmds.py
+    │   ├── evolving.py
+    │   └── helper.py
+    ├── requirements.txt
+    ├── setup.py
+    └── tests
+        ├── __init__.py
+        ├── evolving.py
+        └── helper.py
 
-    tree ~/.config/evolving
-        ~/.config/evolving
-        └── config.xml
-    ```
+tree ~/.config/evolving
+    ~/.config/evolving
+    └── config.xml
+```
 
 ## Installation guide
 1. Requirements
