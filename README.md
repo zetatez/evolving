@@ -8,9 +8,11 @@ This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading
 
 ## Get in touch!
 
-In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)
+In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg) or wechat group.
 
-[![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- ![Wechat Group](http://baidu.com/pic/doge.png)
+
 
 ## How to contribute
 To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
