@@ -88,8 +88,43 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     </evolving>
     """ > ~/.config/evolving/config.xml
     ```
+    
+    - Ex.:
+    ```xml
+    <evolving>
+            <trading>
+                    <!-- 同花顺账号 -->
+                    <userid>77777777777</userid>
+                    <!-- 同花顺账户密码 -->
+                    <password>123456</password>
+                    <!-- 券商代码: 拼音首字母组合, ex. PAZQ 指 “平安证券” -->
+                    <broker_code>PAZQ</broker_code>
+                    <!-- 券商账户 -->
+                    <broker_account>66666666</broker_account>
+                    <!-- 券商账户密码 -->
+                    <broker_password>123456</broker_password>
+                    <!-- 银行名称:中文即可,用不到 -->
+                    <bank_name>工商银行</bank_name>
+                    <!-- 银行账户 -->
+                    <bank_account>666666666666666666</bank_account>
+                    <!-- 银行账户密码 -->
+                    <bank_password>112173</bank_password>
+            </trading>
+            <mail>
+                    <!-- mail host -->
+                    <mail_host>smtp.163.com</mail_host>
+                    <!-- mail sender -->
+                    <mail_sender>evolving@163.com</mail_sender>
+                    <!-- mail license -->
+                    <mail_license>SNRRQHKXDFEUNNSFT</mail_license>
+                    <!-- mail receivers: multiple can be specified, separated by ';' -->
+                    <!-- It is highly recommended to specify only one recevier, and same with mail_sender -->
+                    <mail_receivers>evolving@163.com</mail_receivers>
+            </mail>
+    </evolving>
+    ```
 
-5. Authorization
+1. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
         - [x] Terminal
         - [x] your IDE, ex. sublime, vscode 
@@ -104,6 +139,16 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     - You need to log in broker and bank account manually at least once.
     - If you want to use the email notification module, you need to register a 163 email account.
     - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at zetatez@icloud.com.
+        Or you can make a little change to the `asloginBroker` of the ascmd.py file and `python setup.py install` again.
+        Up to now, The supported brokers are
+        - <broker_code>ZXZQ</broker_code>       -- 中信证券
+        - <broker_code>PAZQ</broker_code>       -- 平安证券
+        - <broker_code>ZSZQ</broker_code>       -- 浙商证券					    
+        - <broker_code>GTJA</broker_code>       -- 国泰君安
+        - <broker_code>GJZQ</broker_code>       -- 国金证券
+        - <broker_code>XYZQ</broker_code>       -- 兴业证券
+        - <broker_code>ZJZQ</broker_code>       -- 中金证券
+        - <broker_code>ZTZQ</broker_code>       -- 中泰证券
 
 - A brief tutorial can be found at [wiki](https://github.com/zetatez/evolving/wiki).
 
