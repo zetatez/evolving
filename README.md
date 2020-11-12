@@ -89,7 +89,7 @@ To contribute in this repo, please open a [pull request](https://help.github.com
     """ > ~/.config/evolving/config.xml
     ```
 
-    - Ex.:
+    - Ex. of the config file `~/.config/evolving/config.xml`:
     ```xml
     <evolving>
             <trading>
