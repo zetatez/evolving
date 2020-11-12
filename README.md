@@ -8,7 +8,7 @@ This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading
 
 ## Get in touch!
 
-In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg) or wechat group.
+In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg) or [wechat group](https://raw.githubusercontent.com/zetatez/evolving/main/wechatgroup.jpg).
 
 - [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 - ![Wechat Group](https://raw.githubusercontent.com/zetatez/evolving/main/wechatgroup.jpg)
