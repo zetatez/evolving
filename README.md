@@ -139,7 +139,7 @@ tree ~/.config/evolving
     - You need to log in broker and bank account manually at least once.
     - If you want to use the email notification module, you need to register a 163 email account.
     - Technically, there is no restriction on brokers, but I didn't develop it all. If you don't find the broker you want, please contact me at zetatez@icloud.com.
-        Or you can make a little change to the `asloginBroker` of the script *ascmd.py* file and `python setup.py install` again.
+        Or you can make a little change to the `asloginBroker` of the script [*ascmd.py*](https://github.com/zetatez/evolving/blob/main/evolving/ascmds.py) file and `python setup.py install` again.
         
         Up to now, The supported brokers are
         - <broker_code>ZXZQ</broker_code>       -- 中信证券
