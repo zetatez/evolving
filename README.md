@@ -1,5 +1,5 @@
 # Welcome to the evolving !
-This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the Mac OSX system.
+This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading engine under the MacOS system.
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
@@ -10,9 +10,13 @@ This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading
 
 In order to get in touch with the author, join [Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg) or [wechat group](https://raw.githubusercontent.com/zetatez/evolving/main/wechatgroup.jpg).
 
-- Gitter: [![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- Gitter
 
-- Wechat Group: <img src="https://raw.githubusercontent.com/zetatez/evolving/main/wechatgroup.jpg" alt="wechat group" width="120" align="top" />
+[![Gitter](https://badges.gitter.im/zetatez-evolving/evolving.svg)](https://gitter.im/zetatez-evolving/evolving?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+- Wechat Group
+
+<img src="https://raw.githubusercontent.com/zetatez/evolving/main/wechatgroup.jpg" alt="wechat group" width="120" align="top" />
 
 ## How to contribute
 To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
