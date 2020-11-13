@@ -45,6 +45,7 @@ tree ~/.config/evolving
 ## Installation guide
 1. Requirements
     - python >= 3.8.5
+    - 同花顺 == Version 2.3.0
 
 2. Dependencies
     ```bash
