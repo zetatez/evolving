@@ -169,8 +169,8 @@ tree ~/.config/evolving
 	```
 A brief **tutorial** can be found at [***wik***i](https://github.com/zetatez/evolving/wiki).
 
-
 ## For more information
+
 - Hints:
     - You need to log in broker and bank account manually at least once.
     - If you want to use the email notification module, you need to register a 163 email account.
@@ -189,4 +189,4 @@ A brief **tutorial** can be found at [***wik***i](https://github.com/zetatez/evo
 
         Note: For different brokers, the display might be different. That is to say, the code might need to be slightly adjusted according to the different brokers.
 
-
+- [PyPi](https://pypi.org/project/evolving/)
