@@ -3,9 +3,6 @@
 # laod env
 source ~/.zshrc
 
-curMonth=`date +%Y-%m`
-modelPath=$(cd; pwd)
-
 savvy(){
 	# ipython: load useful modules on startup
 echo """
@@ -50,7 +47,7 @@ helpfun(){
 		Email: zetatez@icloud.com
     Ex:
 		1. To use evo shell
-			evo
+			evo -s
 	'
 	echo ${doc}
 }
