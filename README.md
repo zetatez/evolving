@@ -145,29 +145,30 @@ tree ~/.config/evolving
         - [x] osascript
 
 6. Starting from the command line !
-```bash
-~/evolving/evo -s
+    ```bash
+    ~/evolving/evo -s
 
-******************************************
-*** Evo !                              ***
-*** Trading through the command line ! ***
-******************************************
-os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
-s = Service()
-e = Evolving()
-es = EvolvingSim()
-e.keepInformed = True
+    ******************************************
+    *** Evo !                              ***
+    *** Trading through the command line ! ***
+    ******************************************
+    os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
+    s = Service()
+    e = Evolving()
+    es = EvolvingSim()
+    e.keepInformed = True
 
-In [1]: s.loginClient()
-Out[1]: True
+    In [1]: s.loginClient()
+    Out[1]: True
 
-In [2]: e.loginBroker()
-Out[2]: True
+    In [2]: e.loginBroker()
+    Out[2]: True
 
-In [3]: 
+    In [3]: 
+    ...
+	```
+A brief **tutorial** can be found at [***wik***i](https://github.com/zetatez/evolving/wiki).
 
-...
-```
 
 ## For more information
 - Hints:
@@ -188,5 +189,4 @@ In [3]:
 
         Note: For different brokers, the display might be different. That is to say, the code might need to be slightly adjusted according to the different brokers.
 
-- A brief tutorial can be found at [wiki](https://github.com/zetatez/evolving/wiki).
 
