@@ -68,7 +68,7 @@ tree ~/.config/evolving
 
    - Building `evolving` from source
        ```bash
-       git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install; rm -rf ~/evolving
+       git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install
        ```
 
 4. Configuration
