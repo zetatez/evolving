@@ -1,0 +1,73 @@
+#!/bin/zsh
+
+# laod env
+source ~/.zshrc
+
+curMonth=`date +%Y-%m`
+modelPath=$(cd; pwd)
+
+savvy(){
+	# ipython: load useful modules on startup
+echo """
+# -*- coding: utf-8 -*-
+import os, sys, time
+from datetime import datetime
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from pprint import pprint as show
+from evolving.evolving import Service, Evolving, EvolvingSim
+from evolving.helper import Msg, Mail, Logging, Tlog
+s = Service()
+e = Evolving()
+es = EvolvingSim()
+
+hints = '''os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
+s = Service()
+e = Evolving()
+es = EvolvingSim()'''
+
+print('******************************************')
+print('*** Evo !                              ***')
+print('*** Trading through the command line ! ***')
+print('******************************************')
+print(hints)
+""" > ~/.ipython/profile_default/startup/startup.py
+ipython --no-banner --quiet --no-confirm-exit
+}
+
+helpfun(){
+	doc='
+	NAME:
+		evo
+
+	SYNOPSIS:
+		evo -[h]
+	OPTIONS:
+		-h  help
+	AUTHOR:
+		Lorenzo
+		Email: zetatez@icloud.com
+	
+	Ex:
+		1. To use evo shell
+			evo
+	'
+	echo ${doc}
+}
+
+# parsing args
+while getopts :h opt
+do
+	case "$opt" in
+		h) help="true";;
+		*) echo "unknown option: $opt";;
+	esac
+done
+
+if [ ${help} ]; then
+	helpfun
+fi
+
+savvy
+
