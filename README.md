@@ -144,7 +144,7 @@ tree ~/.config/evolving
         - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
 
-6. Starting from command line
+6. Starting from the command line !
 ```bash
 ~/evolving/evo -s
 
