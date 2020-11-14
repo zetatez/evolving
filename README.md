@@ -27,15 +27,19 @@ tree evolving
     evolving
     ├── LICENSE
     ├── README.md
+    ├── evo
+    ├── evolving
     │   ├── ascmds.py
     │   ├── evolving.py
     │   └── helper.py
+    │   └── top_level.txt
     ├── requirements.txt
     ├── setup.py
-    └── tests
-        ├── __init__.py
-        ├── evolving.py
-        └── helper.py
+    ├── tests
+    │   ├── __init__.py
+    │   ├── evolving.py
+    │   └── helper.py
+    └── wechatgroup.jpg
 
 tree ~/.config/evolving
     ~/.config/evolving
@@ -130,8 +134,7 @@ tree ~/.config/evolving
             </mail>
     </evolving>
     ```
-
-1. Authorization
+5. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
         - [x] Terminal
         - [x] your IDE, ex. sublime, vscode, etc.
@@ -140,6 +143,31 @@ tree ~/.config/evolving
         - [x] Terminal
         - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
+
+6. Starting from command line
+```bash
+~/evolving/evo -s
+
+******************************************
+*** Evo !                              ***
+*** Trading through the command line ! ***
+******************************************
+os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
+s = Service()
+e = Evolving()
+es = EvolvingSim()
+e.keepInformed = True
+
+In [1]: s.loginClient()
+Out[1]: True
+
+In [2]: e.loginBroker()
+Out[2]: True
+
+In [3]: 
+
+...
+```
 
 ## For more information
 - Hints:

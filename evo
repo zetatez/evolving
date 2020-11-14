@@ -18,11 +18,13 @@ from evolving.helper import Msg, Mail, Logging, Tlog
 s = Service()
 e = Evolving()
 es = EvolvingSim()
+e.keepInformed = True
 
 hints = '''os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
 s = Service()
 e = Evolving()
-es = EvolvingSim()'''
+es = EvolvingSim()
+e.keepInformed = True'''
 
 print('******************************************')
 print('*** Evo !                              ***')
