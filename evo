@@ -40,16 +40,15 @@ helpfun(){
 	doc='
 	NAME:
 		evo
-
 	SYNOPSIS:
-		evo -[h]
+		evo -[sh]
 	OPTIONS:
+		-s  shell 
 		-h  help
 	AUTHOR:
 		Lorenzo
 		Email: zetatez@icloud.com
-	
-	Ex:
+    Ex:
 		1. To use evo shell
 			evo
 	'
@@ -57,11 +56,12 @@ helpfun(){
 }
 
 # parsing args
-while getopts :h opt
+while getopts :sh opt
 do
 	case "$opt" in
+		s) issavvy="true";;
 		h) help="true";;
-		*) echo "unknown option: $opt";;
+		*) echo "unknown option: $opt, try evo -h";;
 	esac
 done
 
@@ -69,5 +69,7 @@ if [ ${help} ]; then
 	helpfun
 fi
 
-savvy
+if [ ${issavvy} ]; then
+    savvy
+fi
 
