@@ -100,41 +100,7 @@ tree ~/.config/evolving
     """ > ~/.config/evolving/config.xml
     ```
 
-    - Example of the config file `~/.config/evolving/config.xml`:
-    ```xml
-    <evolving>
-            <trading>
-                    <!-- 同花顺账号 -->
-                    <userid>77777777777</userid>
-                    <!-- 同花顺账户密码 -->
-                    <password>123456</password>
-                    <!-- 券商代码: 拼音首字母组合, ex. PAZQ 指 “平安证券” -->
-                    <broker_code>PAZQ</broker_code>
-                    <!-- 券商账户 -->
-                    <broker_account>66666666</broker_account>
-                    <!-- 券商账户密码 -->
-                    <broker_password>123456</broker_password>
-                    <!-- 银行名称:中文即可,用不到 -->
-                    <bank_name>工商银行</bank_name>
-                    <!-- 银行账户 -->
-                    <bank_account>666666666666666666</bank_account>
-                    <!-- 银行账户密码 -->
-                    <bank_password>112173</bank_password>
-            </trading>
-            <mail>
-                    <!-- mail host -->
-                    <mail_host>smtp.163.com</mail_host>
-                    <!-- mail sender -->
-                    <mail_sender>evolving@163.com</mail_sender>
-                    <!-- mail license -->
-                    <mail_license>SNRRQHKXDFEUNNSFT</mail_license>
-                    <!-- mail receivers: multiple can be specified, separated by ';' -->
-                    <!-- It is highly recommended to specify only one recevier, and same with mail_sender -->
-                    <mail_receivers>evolving@163.com</mail_receivers>
-            </mail>
-    </evolving>
-    ```
-5. Authorization
+ 5. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
         - [x] Terminal
         - [x] your IDE, ex. sublime, vscode, etc.
@@ -189,4 +155,6 @@ A brief **tutorial** can be found at [***wik***i](https://github.com/zetatez/evo
 
         Note: For different brokers, the display might be different. That is to say, the code might need to be slightly adjusted according to the different brokers.
 
-- [PyPi](https://pypi.org/project/evolving/)
+- [PyPi](https://pypi.org/project/evolving/).
+
+
