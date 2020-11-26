@@ -73,7 +73,7 @@ tree ~/.config/evolving
 
 4. Configuration
     ```bash
-    mkdir -p .ipython/profile_default/startup/
+    mkdir -p ~/.ipython/profile_default/startup/
     mkdir -p ~/.config/evolving
 
     # Note: 
