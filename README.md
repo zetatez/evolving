@@ -73,6 +73,7 @@ tree ~/.config/evolving
 
 4. Configuration
     ```bash
+    mkdir -p .ipython/profile_default/startup/
     mkdir -p ~/.config/evolving
 
     # Note: 
@@ -119,6 +120,7 @@ tree ~/.config/evolving
     *** Trading through the command line ! ***
     ******************************************
     os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
+    
     s = Service()
     e = Evolving()
     es = EvolvingSim()
