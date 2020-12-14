@@ -104,11 +104,9 @@ tree ~/.config/evolving
  5. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Accessibility
         - [x] Terminal
-        - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> Full Disk Access
         - [x] Terminal
-        - [x] your IDE, ex. sublime, vscode, etc.
         - [x] osascript
 
 6. Starting from the command line !
