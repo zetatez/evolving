@@ -17,7 +17,7 @@ class Lock(object):
     def lock(self):
         try:
             info = {"lock": 1}
-            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)                
+            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)
             with open(self._lockFilePath, 'w+') as fh:
                 fh.write(s)
             return True
@@ -27,7 +27,7 @@ class Lock(object):
     def unlock(self):
         try:
             info = {"lock": 0}
-            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)                
+            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)
             with open(self._lockFilePath, 'w+') as fh:
                 fh.write(s)
             return True
@@ -130,10 +130,9 @@ class Service(object):
         time.sleep(1)
         return self.loginClient()
 
-class Base(metaclass = abc.ABCMeta):
+class Base(metaclass= abc.ABCMeta):
     def __init__(self):
         self._config = helper.Config()
-        
     @abc.abstractmethod
     def isBrokerLoggedIn(self):
         pass
@@ -178,7 +177,7 @@ class Evolving(Base):
         self.__logging = helper.Logging(logType = 'env_prod')
         self.__keepInformed = False                             # mail me
         self.__lock = Lock()
-        
+
     @property
     def keepInformed(self):
         return self.__keepInformed
@@ -365,7 +364,7 @@ class Evolving(Base):
     def getTransferRecords(self, dateRange = "thisWeek"):
         """
         Args:
-            range: "today", "thisWeek", "thisMonth", "thisSeason", "thisYear" 
+            range: "today", "thisWeek", "thisMonth", "thisSeason", "thisYear"
         Returns:
             {'comment': ['日期', '货币单位', '发生金额', '合同编号', '银行名称', '操作', '备注'],
             'data': [['20200206', '人民币', '10000.000', '38534275', '工商银行存管', '银行转证券', '异步处理:10000.000交易成功'], ['20200814', '人民币', '10000.000', '42703579', '工商银行存管', '银行转证券', '异步处理(失败):10000.000银行账户余额不足']],
@@ -386,7 +385,7 @@ class Evolving(Base):
                 transferRecords.update({'status': True})
             else:
                 transferRecords.update({'status': False})
-            
+
             if transferRecords.get('status'):
                 length = 7
                 transferRecords.update({'comment': [ls.pop(0) for x in range(length) if ls]})
@@ -491,7 +490,7 @@ class Evolving(Base):
             self.__logging.error("get bids failed: " + str(e))
         self.__lock.unlock()
         return bids
- 
+
     def issuingEntrust(self, stockCode, amount, price = None, tradingAction = 'buy', assetType = None):
         """
         Args:
@@ -514,7 +513,7 @@ class Evolving(Base):
             except Exception as e:
                 self.__logging.error("mailing failed with error: " + str(e))
             return
-        
+
         status = False
         contractNo = None
         if not self.__lock.requestLock():
@@ -626,7 +625,7 @@ class Evolving(Base):
         Raises:
         """
         return self.issuingEntrust(stockCode, amount, price = price, tradingAction = 'sell', assetType = 'sciTech')
-   
+
     def buyGem(self, stockCode, amount, price = None):
         """
         Args:
@@ -661,7 +660,7 @@ class Evolving(Base):
                 'info': '',
                 'status': True
             }
-            
+
         Raises:
         """
         todayIPO = {}
@@ -721,7 +720,7 @@ class Evolving(Base):
             cmd = ascmds.asoneKeyIPO
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
-            
+
             flag = ls.pop(0)
             info = None
             if flag == "successed":
@@ -744,7 +743,7 @@ class Evolving(Base):
             revokeType:     # "allBuy", "allSell", "allBuyAndSell", "contractNo"
             assetType:      # "stock", "sciTech", "gem"
             contractNo:     # "N8743678"
-        Returns: 
+        Returns:
             True or False
         Raises:
         """
@@ -1099,7 +1098,7 @@ class Evolving(Base):
             cmd = ascmds.asgetClosedDeals + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
-            
+
             flag = ls.pop(0)
             if flag == "successed":
                 closedDeals.update({'status': True})
@@ -1146,7 +1145,7 @@ class Evolving(Base):
             cmd = ascmds.asgetCapitalDetails + ' ' +  assetType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
-            
+
             flag = ls.pop(0)
 
             if flag == "successed":
@@ -1193,7 +1192,7 @@ class Evolving(Base):
             return result
 
         try:
-            cmd = ascmds.asgetIPO + ' ' + queryType + ' ' + dateRange 
+            cmd = ascmds.asgetIPO + ' ' + queryType + ' ' + dateRange
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
 
@@ -1298,10 +1297,10 @@ class Evolving(Base):
         except Exception as e:
             self.__logging.error("liquidating failed: " + str(e))
         return False
-    
+
     def entrustPortfolio(self, StockCodeAmountPriceList = []):
         """ 委托买入股票组合, price 可为 None, 以最优价买入. 如设置了价格还是以最优价买入， 则调整 applescript 代码延时, 视机器性能调整
-        Args: 
+        Args:
             StockCodeAmountPriceList = [['512290', '1000', '2.169']]
         Returns:
             {'512290': True}
@@ -1395,7 +1394,7 @@ class EvolvingSim():
             cmd = ascmds.asissuingEntrustSim + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
             res = os.popen(cmd).read().strip()
             ls = [x.strip() for x in res.split(',')]
-            
+
             flag = ls.pop(0)
             info = None
             if flag == "successed":
@@ -1479,7 +1478,7 @@ class EvolvingSim():
                 holdingShares.update({'status': True})
             else:
                 holdingShares.update({'status': False})
-            
+
             if holdingShares.get("status"):
                 length = 15
                 holdingShares.update({'comment': [y for y in [ls.pop(0) for x in range(length) if ls] if y]})
@@ -1582,7 +1581,7 @@ class EvolvingSim():
 
     def getCapitalDetails(self, dateRange = 'thisSeason'):
         """
-        Args:   
+        Argsr:
             assetType: "stock"
             dateRange: "today", "thisWeek", "thisMonth", "thisSeason", "thisYear"
         Returns:
@@ -1654,7 +1653,7 @@ class EvolvingSim():
 
     def entrustPortfolio(self, stockCodeAmountPriceList = []):
         """ 委托买入股票组合, price 可为 None, 以最优价买入. 如设置了价格还是以最优价买入， 则调整 applescript 代码延时, 视机器性能调整
-        Args: 
+        Args:
             stockCodeAmountPriceList = [['512290', '1000', '2.169']]
         Returns:
             {'512290': True}
@@ -1723,7 +1722,7 @@ if __name__== "__main__":
 
     # status = dw.isBrokerLoggedIn()
     # print(status)
-    
+
     # accountInfo = dw.getAccountInfo()
     # show(accountInfo)
 
@@ -2017,3 +2016,8 @@ if __name__== "__main__":
 
     # status = service.logoutClient()
     # print(status)
+
+
+
+
+
