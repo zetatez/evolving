@@ -151,10 +151,10 @@ class Tlog(Msg):
         Args:
             action:     # entrust buy, entrust sell, buy, sell, revoke, transferBroker2Bank, transferBank2Broker
             assets:     # stock, sciTech, gem
-            assetsCode: 
+            assetsCode:
             price:
             amount:
-            status:     # successed, failed, 
+            status:     # successed, failed,
             comments:
         """
         self.__timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -231,3 +231,5 @@ if __name__ == "__main__":
     tlog = Tlog(action='entrust buy', assetsName='stock', assetsCode='000000', price='45.93', amount='1000', status='successed', comments='')
     mail = Mail(tlog)
     print(tlog)
+
+
