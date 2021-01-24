@@ -130,42 +130,34 @@ class Service(object):
         time.sleep(1)
         return self.loginClient()
 
-class Base(metaclass= abc.ABCMeta):
+class Base():
     def __init__(self):
         self._config = helper.Config()
-    @abc.abstractmethod
+
     def isBrokerLoggedIn(self):
         pass
 
-    @abc.abstractmethod
     def loginBroker(self):
         pass
 
-    @abc.abstractmethod
     def logoutBroker(self):
         pass
 
-    @abc.abstractmethod
     def getAccountInfo(self):
         pass
 
-    @abc.abstractmethod
     def transfer(self):
         pass
 
-    @abc.abstractmethod
     def issuingEntrust(self):
         pass
 
-    @abc.abstractmethod
     def buy(self):
         pass
 
-    @abc.abstractmethod
     def sell(self):
         pass
 
-    @abc.abstractmethod
     def oneKeyIPO(self):
         pass
 
@@ -2016,6 +2008,7 @@ if __name__== "__main__":
 
     # status = service.logoutClient()
     # print(status)
+
 
 
 

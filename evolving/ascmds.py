@@ -1552,7 +1552,7 @@ on getCapitalDetails(assetType, dateRange)
 				end if
 				delay 0.1
 
-				-- return entire contents	
+				-- return entire contents
 				-- sometimes in area 4 sometimes in area 5
 				try
 					set comments to get value of attribute "AXTitle" of button of group 1 of table 1 of scroll area 4 of window 1 of application process "同花顺" of application "System Events"
@@ -2482,7 +2482,7 @@ on getCapitalDetailsSim(assetType, dateRange)
 				delay 0.1
 
 				-- return entire contents
-				-- sometimes in area 4 sometimes in area 5	
+				-- sometimes in area 4 sometimes in area 5
 				try
 					set comments to get value of attribute "AXTitle" of button of group 1 of table 1 of scroll area 4 of window 1 of application process "同花顺" of application "System Events"
 					set closedDeals to get value of every text field of every row of table 1 of scroll area 4 of window 1 of application process "同花顺" of application "System Events"
