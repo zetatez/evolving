@@ -803,10 +803,10 @@ class Evolving(Base):
                 mailMe(action = "revoke all sell entrust", status='successed')
             else:
                 self.__logging.error("revoke all sell entrust failed")
-                mailMe(action = "revoke all sell entrust", status = "failed")
+                mailMe(action="revoke all sell entrust", status="failed")
         except Exception as e:
-            self.__logging.error("revoke all sell entrust failed Err: "+ str(e))
-            mailMe(action = "revoke all sell entrust", status = "failed")
+            self.__logging.error("revoke all sell entrust failed Err: " + str(e))
+            mailMe(action="revoke all sell entrust", status="failed")
         self.__lock.unlock()
         return status
 
@@ -818,9 +818,9 @@ class Evolving(Base):
             True or False
         Raises:
         """
-        def mailMe(action = '', assetsName = '', assetsCode = '', price = '', amount = '', status = '', comments = ''):
+        def mailMe(action='', assetsName='', assetsCode='', price='', amount='', status='', comments=''):
             if self.__keepInformed:
-                tlog = helper.Tlog(action = action, assetsName = assetsName, assetsCode = assetsCode, price = price, amount = amount, status = status, comments = comments)
+                tlog = helper.Tlog(action=action, assetsName=assetsName, assetsCode=assetsCode, price=price, amount=amount, status=status, comments=comments)
                 helper.Mail(tlog)
             return
 
