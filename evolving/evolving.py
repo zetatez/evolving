@@ -2,10 +2,10 @@
 
 import abc, os, sys, json, time
 from pprint import pprint as show
-# from . import ascmds
-# from . import helper
-import ascmds
-import helper
+from . import ascmds
+from . import helper
+# import ascmds
+# import helper
 
 class Lock(object):
     """ Lock: lock maintainer

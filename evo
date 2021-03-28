@@ -1,12 +1,12 @@
 #!/bin/zsh
 
-# laod env
+# # laod env
 source ~/.zshrc
 
 savvy(){
-	# ipython: load useful modules on startup
 echo """
 # -*- coding: utf-8 -*-
+
 import os, sys, time
 from datetime import datetime
 import numpy as np
@@ -20,18 +20,19 @@ e = Evolving()
 es = EvolvingSim()
 e.keepInformed = True
 
-hints = '''os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging, Tlog were imported
-s = Service()
-e = Evolving()
-es = EvolvingSim()
-e.keepInformed = True'''
+hints = '''
+# os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging were imported
+# s = Service()
+# e = Evolving()
+# es = EvolvingSim()
+# e.keepInformed = True
+'''
 
-print('******************************************')
-print('*** Evo !                              ***')
-print('*** Trading through the command line ! ***')
-print('******************************************')
+print('Evo !')
+print('-------------------------')
 print(hints)
 """ > ~/.ipython/profile_default/startup/startup.py
+
 ipython --no-banner --quiet --no-confirm-exit
 }
 
@@ -42,7 +43,7 @@ helpfun(){
 	SYNOPSIS:
 		evo -[sh]
 	OPTIONS:
-		-s  shell 
+		-s  shell
 		-h  help
 	AUTHOR:
 		Lorenzo
