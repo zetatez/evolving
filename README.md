@@ -3,7 +3,7 @@ This is a repo for the [`evolving`](https://github.com/zetatez/evolving) trading
 
 <img src="http://latex.codecogs.com/gif.latex?S_T=S_0\int_Te^{r(t)}du"/>
 
-## LICESE
+## LICENSE
 Released under the [MIT](./LICENSE) License. ©[Lorenzo](https://github.com/zetatez).
 
 ## Get in touch!
