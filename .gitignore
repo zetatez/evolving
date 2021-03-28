@@ -1,4 +1,5 @@
-./build
-./dist
-./evolving.egg-info
-./tests
+build/
+dist/
+evolving.egg-info/
+tests/
+.DS_Store
