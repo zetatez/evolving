@@ -3,3 +3,4 @@ dist/
 evolving.egg-info/
 tests/
 .DS_Store
+.gitignore
