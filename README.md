@@ -47,12 +47,8 @@ tree ~/.config/evolving
 2. Dependencies
     ```bash
     brew install cliclick
-
     cliclick -V
         # cliclick 4.0.1, 2018-04-10
-
-    which cliclick
-        # /usr/local/bin/cliclick
 
     pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
     ```
@@ -65,7 +61,9 @@ tree ~/.config/evolving
 
    - Building `evolving` from source
        ```bash
-       git clone git@github.com:zetatez/evolving.git ~/evolving; cd ~/evolving; python setup.py install
+       git clone git@github.com:zetatez/evolving.git ~/evolving
+       cd ~/evolving
+       python setup.py install
        ```
 
 4. Configuration
@@ -76,7 +74,6 @@ tree ~/.config/evolving
     # Note:
     # 1. You need to log in broker and bank account manually at least once.
     # 2. If you want to use the email notification module, you need to register a 163 email account.
-
     echo """
     <evolving>
         <trading>
