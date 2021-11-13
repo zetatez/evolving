@@ -1,0 +1,18 @@
+<evolving>
+    <trading>
+        <userid>THS id</userid>
+        <password>THS password</password>
+        <broker_code>PAZQ</broker_code>
+        <broker_account>your broker account</broker_account>
+        <broker_password>broker account password</broker_password>
+        <bank_name>bank name</bank_name>
+        <bank_account>your bank account</bank_account>
+        <bank_password>bank account password</bank_password>
+    </trading>
+    <mail>
+        <mail_host>smtp.163.com</mail_host>
+        <mail_sender>your email address@163.com</mail_sender>
+        <mail_license>your email license</mail_license>
+        <mail_receivers>your email address@163.com</mail_receivers>
+    </mail>
+</evolving>

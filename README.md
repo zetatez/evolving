@@ -17,112 +17,56 @@ Released under the [MIT](./LICENSE) License. ©[Lorenzo](https://github.com/zeta
 ## To contribute
 To contribute in this repo, please open a [pull request](https://help.github.com/articles/using-pull-requests/#fork--pull) from your fork of this repo.
 
-## Repo structure
-```bash
-tree evolving
-    .
-    ├── LICENSE
-    ├── README.md
-    ├── evo
-    ├── evolving
-    │   ├── LICENSE
-    │   ├── __init__.py
-    │   ├── ascmds.py
-    │   ├── evolving.py
-    │   └── helper.py
-    ├── requirements.txt
-    ├── setup.py
-    └── wechatgroup.jpg
-
-tree ~/.config/evolving
-    ~/.config/evolving
-    └── config.xml
-```
-
 ## Installation guide
 1. Requirements
-    - python >= 3.8.5
-    - 同花顺 == Version 2.3.1
+    - cliclick >= 4.0.1
+    - python   >= 3.8.5
+    - 同花顺   == Version 2.3.1
 
 2. Dependencies
     ```bash
     brew install cliclick
-    cliclick -V
-        # cliclick 4.0.1, 2018-04-10
-
     pip install `curl -fsSL https://raw.githubusercontent.com/zetatez/evolving/main/requirements.txt`
     ```
 
-3. Installation
-   - Building `evolving` from pip
-       ```bash
-       pip install evolving
-       ```
-
-   - Building `evolving` from source
-       ```bash
-       git clone git@github.com:zetatez/evolving.git ~/evolving
-       cd ~/evolving
-       python setup.py install
-       ```
+4. Installation
+- It is strongly recommended to use the source code.
 
 4. Configuration
-    ```bash
-    mkdir -p ~/.ipython/profile_default/startup/
-    mkdir -p ~/.config/evolving
+Note:
+- You need to log in broker and bank account manually at least once.
+- If you want to use the email notification module, you need to register a 163 email account.
+```bash
+mkdir -p ~/.config/evolving
+vim ~/.config/evolving/config.xml
+```
+```xml
+<evolving>
+    <trading>
+        <userid>THS id</userid>
+        <password>THS password</password>
+        <broker_code>PAZQ</broker_code>
+        <broker_account>your broker account</broker_account>
+        <broker_password>broker account password</broker_password>
+        <bank_name>bank name</bank_name>
+        <bank_account>your bank account</bank_account>
+        <bank_password>bank account password</bank_password>
+    </trading>
+    <mail>
+        <mail_host>smtp.163.com</mail_host>
+        <mail_sender>your email address@163.com</mail_sender>
+        <mail_license>your email license</mail_license>
+        <mail_receivers>your email address@163.com</mail_receivers>
+    </mail>
+</evolving>
+```
 
-    # Note:
-    # 1. You need to log in broker and bank account manually at least once.
-    # 2. If you want to use the email notification module, you need to register a 163 email account.
-    echo """
-    <evolving>
-        <trading>
-            <userid>THS id</userid>
-            <password>THS password</password>
-            <broker_code>PAZQ</broker_code>
-            <broker_account>your broker account</broker_account>
-            <broker_password>broker account password</broker_password>
-            <bank_name>bank name</bank_name>
-            <bank_account>your bank account</bank_account>
-            <bank_password>bank account password</bank_password>
-        </trading>
-        <mail>
-            <mail_host>smtp.163.com</mail_host>
-            <mail_sender>your email address@163.com</mail_sender>
-            <mail_license>your email license</mail_license>
-            <mail_receivers>your email address@163.com</mail_receivers>
-        </mail>
-    </evolving>
-    """ > ~/.config/evolving/config.xml
-    ```
-
- 5. Authorization
+5. Authorization
     - Mac -> Systerm Preference -> Security & Privacy -> Privacy -> unluck -> "Accessibility" AND "Full Disk Access".
         - [x] Terminal
         - [x] osascript
 
-6. Starting from the command line !
-    ```bash
-    ~/evolving/evo -s
-
-	Evo !
-	-------------------------
-
-	# os, sys, time, datetime, np, pd, plt, show, Service, Evolving, EvolvingSim, Msg, Mail, Logging were imported
-	# s = Service()
-	# e = Evolving()
-	# es = EvolvingSim()
-	# e.keepInformed = TrueEvo !
-
-    In [1]: s.loginClient()
-    Out[1]: True
-
-    In [2]: e.loginBroker()
-    Out[2]: True
-
-    In [3]: 
-    ...
-	```
+6. Tutorial
 A brief **tutorial** can be found at [***wik***i](https://github.com/zetatez/evolving/wiki).
 
 ## For more information
