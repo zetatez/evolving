@@ -1,0 +1,16 @@
+evolving:
+  trading:
+    userid: YOUR_THS_ID
+    password: YOUR_THS_PASSWORD
+    broker_code: PAZQ
+    broker_account: YOUR_BROKER_ACCOUNT
+    broker_password: YOUR_BROKER_PASSWORD
+    bank_name: YOUR_BANK_NAME
+    bank_account: YOUR_BANK_ACCOUNT
+    bank_password: YOUR_BANK_PASSWORD
+  mail:
+    mail_host: smtp.163.com
+    mail_sender: your_email@163.com
+    mail_license: YOUR_EMAIL_LICENSE
+    mail_receivers:
+      - your_email@163.com

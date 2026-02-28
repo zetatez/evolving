@@ -2009,8 +2009,3 @@ if __name__== "__main__":
     # status = service.logoutClient()
     # print(status)
 
-
-
-
-
-

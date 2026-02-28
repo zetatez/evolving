@@ -2,7 +2,7 @@
 
 import re, os, sys, time, json
 from datetime import datetime
-import xmltodict
+import yaml
 import logging
 from logging import FileHandler
 import requests
@@ -15,6 +15,29 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
 BASE_DIR = os.path.expanduser('~')
+CONFIG_PATH = os.path.join(BASE_DIR, '.config', 'evolving', 'config.yaml')
+
+
+def _load_yaml_root():
+    if not os.path.exists(CONFIG_PATH):
+        raise FileNotFoundError("Missing configuration file: {}".format(CONFIG_PATH))
+    with open(CONFIG_PATH, 'r', encoding='utf8') as fp:
+        data = yaml.safe_load(fp) or {}
+    if not isinstance(data, dict):
+        raise ValueError("Configuration file must define a mapping at the top level")
+    if 'evolving' in data and isinstance(data['evolving'], dict):
+        return data['evolving']
+    return data
+
+
+def _load_yaml_section(section_name):
+    root = _load_yaml_root()
+    section = root.get(section_name, {}) if isinstance(root, dict) else {}
+    if section is None:
+        section = {}
+    if not isinstance(section, dict):
+        raise ValueError("Section '{}' must be a mapping".format(section_name))
+    return section
 
 class Config(object):
     def __init__(self):
@@ -30,12 +53,8 @@ class Config(object):
         self.__comment = self.__config.get("comment", None)
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, '.config/evolving/config.xml')
-        config = dict()
-        with open(configPath, 'r', encoding='utf8') as fp:
-            xml = fp.read()
-        config = dict(xmltodict.parse(xml).get('evolving').get('trading'))
-        return config
+        config = _load_yaml_section('trading')
+        return dict(config)
 
     @property
     def config(self):
@@ -82,15 +101,25 @@ class MConfig(object):
         self.__mail_host = self.__config.get("mail_host", None)
         self.__mail_sender = self.__config.get("mail_sender", None)
         self.__mail_license = self.__config.get("mail_license", None)
-        self.__mail_receivers = self.__config.get("mail_receivers", None).split(';')
+        self.__mail_receivers = self.__parse_receivers(self.__config.get("mail_receivers", None))
+
+    def __parse_receivers(self, receivers):
+        if receivers is None:
+            return []
+        if isinstance(receivers, str):
+            return [rcp.strip() for rcp in receivers.split(';') if rcp.strip()]
+        if isinstance(receivers, (list, tuple)):
+            parsed = []
+            for rcp in receivers:
+                value = str(rcp).strip()
+                if value:
+                    parsed.append(value)
+            return parsed
+        raise ValueError("mail_receivers must be a string or list")
 
     def __loadConfiguration(self):
-        configPath = os.path.join(BASE_DIR, '.config/evolving/config.xml')
-        config = dict()
-        with open(configPath, 'r', encoding='utf8') as fp:
-            xml = fp.read()
-        config = dict(xmltodict.parse(xml).get('evolving').get('mail'))
-        return config
+        config = _load_yaml_section('mail')
+        return dict(config)
 
     @property
     def config(self):
@@ -231,5 +260,3 @@ if __name__ == "__main__":
     tlog = Tlog(action='entrust buy', assetsName='stock', assetsCode='000000', price='45.93', amount='1000', status='successed', comments='')
     mail = Mail(tlog)
     print(tlog)
-
-
