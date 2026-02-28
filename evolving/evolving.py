@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import abc, os, sys, json, time
+import os, json, time
 from pprint import pprint as show
 from . import ascmds
 from . import helper
@@ -12,43 +12,54 @@ class Lock(object):
     """
     def __init__(self):
         self._lockFilePath = os.path.join('/tmp/', 'lock.json')
+        self._ensure_lock_file()
         self.unlock()
 
-    def lock(self):
+    def _ensure_lock_file(self):
+        directory = os.path.dirname(self._lockFilePath)
+        if directory and not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+        if not os.path.exists(self._lockFilePath):
+            self._write_state(0)
+
+    def _write_state(self, value):
         try:
-            info = {"lock": 1}
-            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)
-            with open(self._lockFilePath, 'w+') as fh:
-                fh.write(s)
+            payload = json.dumps({"lock": value}, ensure_ascii=False, sort_keys=True, indent=4)
+            tmp_path = self._lockFilePath + '.tmp'
+            with open(tmp_path, 'w', encoding='utf8') as fh:
+                fh.write(payload)
+            os.replace(tmp_path, self._lockFilePath)
             return True
         except Exception:
             return False
+
+    def _read_state(self):
+        try:
+            with open(self._lockFilePath, 'r', encoding='utf8') as fp:
+                state = json.load(fp)
+            if isinstance(state, dict):
+                return 1 if state.get("lock") else 0
+        except FileNotFoundError:
+            self._ensure_lock_file()
+        except Exception:
+            pass
+        return 0
+
+    def lock(self):
+        return self._write_state(1)
 
     def unlock(self):
-        try:
-            info = {"lock": 0}
-            s = json.dumps(info, ensure_ascii=False, sort_keys=True, indent = 4)
-            with open(self._lockFilePath, 'w+') as fh:
-                fh.write(s)
-            return True
-        except Exception:
-            return False
+        return self._write_state(0)
 
     def requestLock(self):
-        def islocked():
-            islock = 0
-            with open(self._lockFilePath, 'r', encoding='utf8') as fp:
-                islock = json.load(fp).get("lock")
-            return islock
-
-        islock = islocked()
+        islock = self._read_state()
         tolerance = 15    # 15 sec
         elapsedTime = 0
         delta = 0.05
         while islock and elapsedTime < tolerance:
             time.sleep(delta)
             elapsedTime += delta
-            islock = islocked()
+            islock = self._read_state()
         if islock:
             return False
         self.lock()
@@ -2008,4 +2019,3 @@ if __name__== "__main__":
 
     # status = service.logoutClient()
     # print(status)
-

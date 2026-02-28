@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import re, os, sys, time, json
+import re, os, time
 from datetime import datetime
 import yaml
 import logging
 from logging import FileHandler
-import requests
-from pprint import pprint as show
-import email
 import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
@@ -157,6 +154,7 @@ class Mail(object):
         self.mail_sender = self.__mconfig.mail_sender
         self.mail_license = self.__mconfig.mail_license
         self.mail_receivers = self.__mconfig.mail_receivers
+        self.__validate_config()
         self.stp = smtplib.SMTP()
         self.stp.connect(self.mail_host, 25)
         # self.stp.set_debuglevel(1)
@@ -165,6 +163,16 @@ class Mail(object):
         self.__compose(msg)
         self.stp.sendmail(self.mail_sender, self.mail_receivers, self.mail.as_string())
         self.stp.quit()
+
+    def __validate_config(self):
+        missing = []
+        for field_name, field_value in ("mail_host", self.mail_host), ("mail_sender", self.mail_sender), ("mail_license", self.mail_license):
+            if not field_value:
+                missing.append(field_name)
+        if not self.mail_receivers:
+            missing.append("mail_receivers")
+        if missing:
+            raise ValueError("Mail configuration missing required fields: " + ', '.join(missing))
 
     def __compose(self, msg):
         self.mail = MIMEMultipart()
