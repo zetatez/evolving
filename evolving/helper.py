@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 
-import re, os, time
+from __future__ import annotations
+import re
+import os
+import time
 from datetime import datetime
+from dataclasses import dataclass, field
+from typing import Optional
 import yaml
 import logging
 from logging import FileHandler
 import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
 BASE_DIR = os.path.expanduser('~')
 CONFIG_PATH = os.path.join(BASE_DIR, '.config', 'evolving', 'config.yaml')
+
+_smtp_connection: Optional[smtplib.SMTP] = None
 
 
 def _load_yaml_root():
@@ -27,7 +33,7 @@ def _load_yaml_root():
     return data
 
 
-def _load_yaml_section(section_name):
+def _load_yaml_section(section_name: str) -> dict:
     root = _load_yaml_root()
     section = root.get(section_name, {}) if isinstance(root, dict) else {}
     if section is None:
@@ -36,137 +42,89 @@ def _load_yaml_section(section_name):
         raise ValueError("Section '{}' must be a mapping".format(section_name))
     return section
 
-class Config(object):
-    def __init__(self):
-        self.__config = self.__loadConfiguration()
-        self.__userid = self.__config.get("userid", None)
-        self.__password = self.__config.get("password", None)
-        self.__broker_code = self.__config.get("broker_code", None)
-        self.__broker_account = self.__config.get("broker_account", None)
-        self.__broker_password = self.__config.get("broker_password", None)
-        self.__bank_name = self.__config.get("bank_name", None)
-        self.__bank_account = self.__config.get("bank_account", None)
-        self.__bank_password = self.__config.get("bank_password", None)
-        self.__comment = self.__config.get("comment", None)
 
-    def __loadConfiguration(self):
+@dataclass
+class Config:
+    userid: str = ""
+    password: str = ""
+    broker_code: str = ""
+    broker_account: str = ""
+    broker_password: str = ""
+    bank_name: str = ""
+    bank_account: str = ""
+    bank_password: str = ""
+    comment: str = ""
+    _config: dict = field(default_factory=dict, repr=False)
+
+    def __post_init__(self):
         config = _load_yaml_section('trading')
-        return dict(config)
+        self._config = dict(config)
+        self.userid = config.get("userid") or ""
+        self.password = config.get("password") or ""
+        self.broker_code = config.get("broker_code") or ""
+        self.broker_account = config.get("broker_account") or ""
+        self.broker_password = config.get("broker_password") or ""
+        self.bank_name = config.get("bank_name") or ""
+        self.bank_account = config.get("bank_account") or ""
+        self.bank_password = config.get("bank_password") or ""
+        self.comment = config.get("comment") or ""
 
     @property
-    def config(self):
-        return self.__config
+    def config(self) -> dict:
+        return self._config
 
-    def __str__(self):
-        return str(self.__config)
 
-    @property
-    def userid(self):
-        return self.__userid
+@dataclass
+class MConfig:
+    mail_host: str = ""
+    mail_sender: str = ""
+    mail_license: str = ""
+    mail_receivers: list[str] = field(default_factory=list)
+    _config: dict = field(default_factory=dict, repr=False)
 
-    @property
-    def password(self):
-        return self.__password
+    def __post_init__(self):
+        config = _load_yaml_section('mail')
+        self._config = dict(config)
+        self.mail_host = config.get("mail_host") or ""
+        self.mail_sender = config.get("mail_sender") or ""
+        self.mail_license = config.get("mail_license") or ""
+        self.mail_receivers = self._parse_receivers(config.get("mail_receivers"))
 
-    @property
-    def broker_code(self):
-        return self.__broker_code
-
-    @property
-    def broker_account(self):
-        return self.__broker_account
-
-    @property
-    def broker_password(self):
-        return self.__broker_password
-
-    @property
-    def bank_name(self):
-        return self.__bank_name
-
-    @property
-    def bank_account(self):
-        return self.__bank_account
-
-    @property
-    def bank_password(self):
-        return self.__bank_password
-
-class MConfig(object):
-    def __init__(self):
-        self.__config = self.__loadConfiguration()
-        self.__mail_host = self.__config.get("mail_host", None)
-        self.__mail_sender = self.__config.get("mail_sender", None)
-        self.__mail_license = self.__config.get("mail_license", None)
-        self.__mail_receivers = self.__parse_receivers(self.__config.get("mail_receivers", None))
-
-    def __parse_receivers(self, receivers):
+    @staticmethod
+    def _parse_receivers(receivers) -> list[str]:
         if receivers is None:
             return []
         if isinstance(receivers, str):
             return [rcp.strip() for rcp in receivers.split(';') if rcp.strip()]
         if isinstance(receivers, (list, tuple)):
-            parsed = []
-            for rcp in receivers:
-                value = str(rcp).strip()
-                if value:
-                    parsed.append(value)
-            return parsed
+            return [str(rcp).strip() for rcp in receivers if str(rcp).strip()]
         raise ValueError("mail_receivers must be a string or list")
 
-    def __loadConfiguration(self):
-        config = _load_yaml_section('mail')
-        return dict(config)
-
     @property
-    def config(self):
-        return self.__config
+    def config(self) -> dict:
+        return self._config
 
-    def __str__(self):
-        return str(self.__config)
 
-    @property
-    def mail_host(self):
-        return self.__mail_host
-
-    @property
-    def mail_sender(self):
-        return self.__mail_sender
-
-    @property
-    def mail_license(self):
-        return self.__mail_license
-
-    @property
-    def mail_receivers(self):
-        return self.__mail_receivers
-
-class Msg(object):
+class Msg:
     def __init__(self):
-        self.subject = "subject"
-        self.body = "body goes here"
+        self.subject: str = "subject"
+        self.body: str = "body goes here"
 
-class Mail(object):
-    def __init__(self, msg):
+
+class Mail:
+    def __init__(self, msg: Msg):
         assert isinstance(msg, Msg)
-        self.__mconfig = MConfig()
-        self.mail_host = self.__mconfig.mail_host
-        self.mail_sender = self.__mconfig.mail_sender
-        self.mail_license = self.__mconfig.mail_license
-        self.mail_receivers = self.__mconfig.mail_receivers
-        self.__validate_config()
-        self.stp = smtplib.SMTP()
-        self.stp.connect(self.mail_host, 25)
-        # self.stp.set_debuglevel(1)
-        self.stp.ehlo()
-        self.stp.login(self.mail_sender, self.mail_license)
-        self.__compose(msg)
-        self.stp.sendmail(self.mail_sender, self.mail_receivers, self.mail.as_string())
-        self.stp.quit()
+        self._mconfig = MConfig()
+        self.mail_host = self._mconfig.mail_host
+        self.mail_sender = self._mconfig.mail_sender
+        self.mail_license = self._mconfig.mail_license
+        self.mail_receivers = self._mconfig.mail_receivers
+        self._validate_config()
+        self._connect_and_send(msg)
 
-    def __validate_config(self):
+    def _validate_config(self):
         missing = []
-        for field_name, field_value in ("mail_host", self.mail_host), ("mail_sender", self.mail_sender), ("mail_license", self.mail_license):
+        for field_name, field_value in (("mail_host", self.mail_host), ("mail_sender", self.mail_sender), ("mail_license", self.mail_license)):
             if not field_value:
                 missing.append(field_name)
         if not self.mail_receivers:
@@ -174,59 +132,71 @@ class Mail(object):
         if missing:
             raise ValueError("Mail configuration missing required fields: " + ', '.join(missing))
 
-    def __compose(self, msg):
+    def _connect_and_send(self, msg: Msg):
+        global _smtp_connection
+        try:
+            if _smtp_connection is None:
+                _smtp_connection = smtplib.SMTP()
+                _smtp_connection.connect(self.mail_host, 25)
+                _smtp_connection.ehlo()
+                _smtp_connection.login(self.mail_sender, self.mail_license)
+
+            self._compose(msg)
+            _smtp_connection.sendmail(self.mail_sender, self.mail_receivers, self.mail.as_string())
+        except Exception:
+            raise
+
+    def _compose(self, msg: Msg):
         self.mail = MIMEMultipart()
-        self.mail["From"] = "zero<" + self.mail_sender + ">"
+        self.mail["From"] = f"zero<{self.mail_sender}>"
         self.mail["To"] = ''.join([y.split("@")[0] + "<" + y + ">;" for y in self.mail_receivers])
-        self.mail["Subject"] = Header(msg.subject, 'utf-8')
+        self.mail["Subject"] = str(Header(msg.subject, 'utf-8'))
         self.mail.attach(MIMEText(msg.body, "plain", "utf-8"))
 
 
 class Tlog(Msg):
-    def __init__(self, action='', assetsName='', assetsCode='', price='', amount='', status='', comments=''):
-        """ transaction msg for email
-        Args:
-            action:     # entrust buy, entrust sell, buy, sell, revoke, transferBroker2Bank, transferBank2Broker
-            assets:     # stock, sciTech, gem
-            assetsCode:
-            price:
-            amount:
-            status:     # successed, failed,
-            comments:
-        """
-        self.__timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        self.__time = self.__timestamp.split()[1]
-        self.__date = time.strftime("%m-%d", time.localtime())
-        self.__action = action
-        self.__assetsName = assetsName
-        self.__assetsCode = assetsCode
-        self.__price = price
-        self.__amount = amount
-        self.__status = status
-        self.__comments = comments
-        self.subject = self.__subject()
+    def __init__(
+        self,
+        action: str = '',
+        assetsName: str = '',
+        assetsCode: str = '',
+        price: str = '',
+        amount: str = '',
+        status: str = '',
+        comments: str = ''
+    ):
+        self._timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        self._action = action
+        self._assetsName = assetsName
+        self._assetsCode = assetsCode
+        self._price = price
+        self._amount = amount
+        self._status = status
+        self._comments = comments
+        self.subject = self._subject()
         self.body = self.__str__()
         self.str = self.__str__()
 
-    def __str__(self):
-        strvar = str(self.__action) + " " + str(self.__assetsName) + " " + str(self.__assetsCode) + " " + str(self.__price) + " " + str(self.__amount) + " " + str(self.__status) + " " + str(self.__comments)
+    def __str__(self) -> str:
+        strvar = f"{self._action} {self._assetsName} {self._assetsCode} {self._price} {self._amount} {self._status} {self._comments}"
         strvar = re.sub(' +', ' ', strvar)
         return strvar
 
-    def __subject(self):
-        strvar = "! " + time.strftime("%H:%M:%S %d-%m", time.localtime()) + " " + str(self.__action) + " " + str(self.__status)
+    def _subject(self) -> str:
+        strvar = f"! {time.strftime('%H:%M:%S %d-%m', time.localtime())} {self._action} {self._status}"
         strvar = re.sub(' +', ' ', strvar)
         return strvar
+
 
 class Logging(logging.Logger):
-    def __init__(self, logType='service'):
-        super(Logging, self).__init__(self)
-        self.__logType = logType
+    def __init__(self, logType: str = 'service'):
+        super(Logging, self).__init__("evolving")
+        self._logType = logType
         self.setLevel('DEBUG')
-        self.__setFileHandler()
+        self._setFileHandler()
 
-    def __setFileHandler(self):
-        path = os.path.join(BASE_DIR, 'logs/evolving/', self.__logType)
+    def _setFileHandler(self):
+        path = os.path.join(BASE_DIR, 'logs/evolving/', self._logType)
         if not os.path.exists(path):
             os.makedirs(path)
         logFilePath = os.path.join(path, datetime.now().date().strftime('%Y-%m-%d.log'))
@@ -234,22 +204,29 @@ class Logging(logging.Logger):
         fh.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
         self.addHandler(fh)
 
+
+def close_smtp_connection():
+    global _smtp_connection
+    if _smtp_connection is not None:
+        try:
+            _smtp_connection.quit()
+        except Exception:
+            pass
+        _smtp_connection = None
+
+
 if __name__ == "__main__":
-    # --- Config
     config = Config()
     print(config.config)
     print(config.userid)
 
-    # --- MConfig
-    config = MConfig()
-    print(config.config)
-    print(config.mail_sender)
+    mconfig = MConfig()
+    print(mconfig.config)
+    print(mconfig.mail_sender)
 
-    # --- Msg
     msg = Msg()
     mail = Mail(msg)
 
-    # --- Logging
     lg = Logging(logType='prod_env')
     lg.info("this is a info")
     lg.debug("this is a debug")
@@ -264,7 +241,8 @@ if __name__ == "__main__":
     lg.error("this is a error")
     lg.critical('this is a critical')
 
-    # --- Tlog
     tlog = Tlog(action='entrust buy', assetsName='stock', assetsCode='000000', price='45.93', amount='1000', status='successed', comments='')
     mail = Mail(tlog)
     print(tlog)
+
+    close_smtp_connection()
