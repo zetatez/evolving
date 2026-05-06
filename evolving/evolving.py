@@ -33,7 +33,7 @@ class Lock:
                 fh.write(payload)
             os.replace(tmp_path, self._lockFilePath)
             return True
-        except Exception:
+        except Exception as e:
             return False
 
     def _read_state(self) -> int:
@@ -44,7 +44,7 @@ class Lock:
                 return 1 if state.get("lock") else 0
         except FileNotFoundError:
             self._ensure_lock_file()
-        except Exception:
+        except Exception as e:
             pass
         return 0
 
@@ -81,7 +81,7 @@ def run_command(cmd: str, timeout: int = 30) -> str:
         return result.stdout.strip()
     except subprocess.TimeoutExpired:
         return "failed"
-    except Exception:
+    except Exception as e:
         return "failed"
 
 
@@ -166,7 +166,7 @@ def _send_mail(action: str = '', assetsName: str = '', assetsCode: str = '', pri
     try:
         tlog = helper.Tlog(action=action, assetsName=assetsName, assetsCode=assetsCode, price=price, amount=amount, status=status, comments=comments)
         helper.Mail(tlog)
-    except Exception:
+    except Exception as e:
         pass
 
 
@@ -386,10 +386,9 @@ class Evolving(Base):
             if price is not None:
                 price = "{:.2f}".format(float(price)) if not len(str(price).split(".")[1]) > 2 else price
 
-            if assetType == "sciTech":
-                assert not (int(amount) < 200)
-            else:
-                assert not (int(amount) < 100)
+            min_amount = 200 if assetType == "sciTech" else 100
+            if int(amount) < min_amount:
+                raise ValueError(f"{assetType} 最低买入 {min_amount} 股，当前: {amount}")
 
             cmd = ascmds.asissuingEntrust + ' ' + tradingAction + ' ' + assetType + ' ' + str(stockCode) + ' ' + str(price) + ' ' + str(amount)
             res = run_command(cmd)

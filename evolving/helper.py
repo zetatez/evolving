@@ -21,7 +21,13 @@ CONFIG_PATH = os.path.join(BASE_DIR, '.config', 'evolving', 'config.yaml')
 _smtp_connection: Optional[smtplib.SMTP] = None
 
 
-def _load_yaml_root():
+_yaml_cache: Optional[dict] = None
+
+
+def _load_yaml_root() -> dict:
+    global _yaml_cache
+    if _yaml_cache is not None:
+        return _yaml_cache
     if not os.path.exists(CONFIG_PATH):
         raise FileNotFoundError("Missing configuration file: {}".format(CONFIG_PATH))
     with open(CONFIG_PATH, 'r', encoding='utf8') as fp:
@@ -29,8 +35,10 @@ def _load_yaml_root():
     if not isinstance(data, dict):
         raise ValueError("Configuration file must define a mapping at the top level")
     if 'evolving' in data and isinstance(data['evolving'], dict):
-        return data['evolving']
-    return data
+        _yaml_cache = data['evolving']
+    else:
+        _yaml_cache = data
+    return _yaml_cache
 
 
 def _load_yaml_section(section_name: str) -> dict:
