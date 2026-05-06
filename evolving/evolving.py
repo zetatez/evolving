@@ -14,7 +14,7 @@ from . import helper
 
 class Lock:
     def __init__(self):
-        self._lockFilePath = os.path.join('/tmp/', 'lock.json')
+        self._lockFilePath = os.path.join('/tmp/', 'lock.evolving.json')
         self._ensure_lock_file()
         self.unlock()
 
@@ -162,25 +162,9 @@ class Base:
         return False
 
 
-def _send_mail(
-    action: str = '',
-    assetsName: str = '',
-    assetsCode: str = '',
-    price: str = '',
-    amount: str = '',
-    status: str = '',
-    comments: str = ''
-) -> None:
+def _send_mail(action: str = '', assetsName: str = '', assetsCode: str = '', price: str = '', amount: str = '', status: str = '', comments: str = '') -> None:
     try:
-        tlog = helper.Tlog(
-            action=action,
-            assetsName=assetsName,
-            assetsCode=assetsCode,
-            price=price,
-            amount=amount,
-            status=status,
-            comments=comments
-        )
+        tlog = helper.Tlog(action=action, assetsName=assetsName, assetsCode=assetsCode, price=price, amount=amount, status=status, comments=comments)
         helper.Mail(tlog)
     except Exception:
         pass
@@ -201,16 +185,7 @@ class Evolving(Base):
     def keepInformed(self, val: bool = True):
         self._keepInformed = val
 
-    def _mailMe(
-        self,
-        action: str = '',
-        assetsName: str = '',
-        assetsCode: str = '',
-        price: str = '',
-        amount: str = '',
-        status: str = '',
-        comments: str = ''
-    ) -> None:
+    def _mailMe(self, action: str = '', assetsName: str = '', assetsCode: str = '', price: str = '', amount: str = '', status: str = '', comments: str = '') -> None:
         if self._keepInformed:
             _send_mail(action, assetsName, assetsCode, price, amount, status, comments)
 
@@ -398,14 +373,7 @@ class Evolving(Base):
         self._lock.unlock()
         return bids
 
-    def issuingEntrust(
-        self,
-        stockCode: str,
-        amount: int,
-        price: Optional[str] = None,
-        tradingAction: str = 'buy',
-        assetType: Optional[str] = None
-    ) -> tuple:
+    def issuingEntrust(self, stockCode: str, amount: int, price: Optional[str] = None, tradingAction: str = 'buy', assetType: Optional[str] = None) -> tuple:
         status = False
         contractNo = None
         if not self._lock.requestLock():
@@ -523,12 +491,7 @@ class Evolving(Base):
         self._lock.unlock()
         return status
 
-    def revokeEntrust(
-        self,
-        revokeType: str = "allBuyAndSell",
-        assetType: str = "stock",
-        contractNo: Optional[str] = None
-    ) -> bool:
+    def revokeEntrust(self, revokeType: str = "allBuyAndSell", assetType: str = "stock", contractNo: Optional[str] = None) -> bool:
         status = False
         if not self._lock.requestLock():
             return status

@@ -544,7 +544,7 @@ on getTransferRecords(dateRange)
 end getTransferRecords
 
 on run {dateRange}
-	-- range: "today", "thisWeek", "thisMonth", "thisSeason", "thisYear" 
+	-- range: "today", "thisWeek", "thisMonth", "thisSeason", "thisYear"
 
 	-- set dateRange to "thisYear"
 	getTransferRecords(dateRange)
