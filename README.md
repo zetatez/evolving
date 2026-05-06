@@ -17,9 +17,7 @@
 
 ## Supported Brokers
 
-Currently supported: ZXZQ (中信证券), PAZQ (平安证券), ZSZQ (浙商证券), GTJA (国泰君安), GJZQ (国金证券), XYZQ (兴业证券), ZJZQ (中金证券), ZTZQ (中泰证券).
-
-The broker login logic is implemented in `ascmds.py`. Users can add support for other brokers by modifying the `asloginBroker` handler.
+All brokers supported by Tonghuashun (同花顺) are supported.
 
 ## Requirements
 
@@ -47,7 +45,7 @@ evolving:
   trading:
     userid: YOUR_THS_ID
     password: YOUR_THS_PASSWORD
-    broker_code: PAZQ
+    broker_name: 平安证券
     broker_account: YOUR_BROKER_ACCOUNT
     broker_password: YOUR_BROKER_PASSWORD
     bank_name: YOUR_BANK_NAME

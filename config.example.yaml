@@ -2,7 +2,7 @@ evolving:
   trading:
     userid: YOUR_THS_ID
     password: YOUR_THS_PASSWORD
-    broker_code: PAZQ
+    broker_name: 平安证券
     broker_account: YOUR_BROKER_ACCOUNT
     broker_password: YOUR_BROKER_PASSWORD
     bank_name: YOUR_BANK_NAME

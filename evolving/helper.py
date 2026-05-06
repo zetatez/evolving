@@ -47,7 +47,7 @@ def _load_yaml_section(section_name: str) -> dict:
 class Config:
     userid: str = ""
     password: str = ""
-    broker_code: str = ""
+    broker_name: str = ""
     broker_account: str = ""
     broker_password: str = ""
     bank_name: str = ""
@@ -61,7 +61,7 @@ class Config:
         self._config = dict(config)
         self.userid = config.get("userid") or ""
         self.password = config.get("password") or ""
-        self.broker_code = config.get("broker_code") or ""
+        self.broker_name = config.get("broker_name") or "平安证券"
         self.broker_account = config.get("broker_account") or ""
         self.broker_password = config.get("broker_password") or ""
         self.bank_name = config.get("bank_name") or ""

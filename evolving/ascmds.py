@@ -194,7 +194,7 @@ logoutClient()
 asloginBroker = """/usr/bin/osascript -e '
 -- login broker
 
-on loginBroker(broker_code, trade_account, trade_pwd)
+on loginBroker(broker_name, trade_account, trade_pwd)
 	tell application "同花顺" to activate
 	delay 0.5
 	tell application "System Events"
@@ -226,33 +226,7 @@ on loginBroker(broker_code, trade_account, trade_pwd)
 					-- 交易 -> 立即登录 -> 证券公司 -> 选择券商 - 需要事先登陆一遍
 					click button 1 of combo box 1 of sheet 1 of window 1 of application process "同花顺" of application "System Events"
 
-					set brokerName to "平安证券" -- default broker
-
-					-- 中信证券
-					if broker_code is "ZXZQ" then
-						set brokerName to "中信证券"
-					-- 平安证券
-					else if broker_code is "PAZQ" then
-						set brokerName to "平安证券"
-					-- 浙商证券
-					else if broker_code is "ZSZQ" then
-						set brokerName to "浙商证券"
-					-- 国泰君安
-					else if broker_code is "GTJA" then
-						set brokerName to "国泰君安"
-					-- 国金证券
-					else if broker_code is "GJZQ" then
-						set brokerName to "国金证券"
-					-- 兴业证券
-					else if broker_code is "XYZQ" then
-						set brokerName to "兴业证券"
-					-- 中金证券
-					else if broker_code is "ZJZQ" then
-						set brokerName to "中金证券"
-					-- 中泰证券
-					else if broker_code is "ZTZQ" then
-						set brokerName to "中泰证券"
-					end if
+					set brokerName to broker_name
 
 					-- 获取曾经登陆过的券商列表
 					set historyBrokers to get value of text field of list 1 of scroll area 1 of combo box 1 of sheet 1 of window 1 of application process "同花顺" of application "System Events"
@@ -363,15 +337,15 @@ on loginBroker(broker_code, trade_account, trade_pwd)
 	end tell
 end loginBroker
 
-on run {broker_code, trade_account, trade_pwd}
+on run {broker_name, trade_account, trade_pwd}
 
 	-- set broker to "PAZQ"
 	-- set trade_account to "xxxx"
 	-- set trade_pwd to "xxxx"
-	loginBroker(broker_code, trade_account, trade_pwd)
+	loginBroker(broker_name, trade_account, trade_pwd)
 
 	-- ex
-	-- osascript loginBroker.scpt PAZQ xxxx xxxx
+	-- osascript loginBroker.scpt 平安证券 xxxx xxxx
 end run
 '"""
 

@@ -194,7 +194,7 @@ class Evolving(Base):
         if not self._lock.requestLock():
             return status
 
-        cmd = ascmds.asisBrokerLoggedIn + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
+        cmd = ascmds.asisBrokerLoggedIn + ' ' + self._config.broker_name + ' ' + self._config.broker_account + ' ' + self._config.broker_password
         res = run_command(cmd)
         status = True if res == "true" else False
         self._lock.unlock()
@@ -205,7 +205,7 @@ class Evolving(Base):
         if not self._lock.requestLock():
             return status
 
-        cmd = ascmds.asloginBroker + ' ' + self._config.broker_code + ' ' + self._config.broker_account + ' ' + self._config.broker_password
+        cmd = ascmds.asloginBroker + ' ' + self._config.broker_name + ' ' + self._config.broker_account + ' ' + self._config.broker_password
         res = run_command(cmd)
         if res == "successed":
             self._logging.info("login broker: " + res)
