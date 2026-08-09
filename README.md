@@ -1,3 +1,6 @@
+
+
+```markdown
 # evolving
 
 MacOS automated trading engine for Tonghuashun (同花顺) via AppleScript.
@@ -44,6 +47,7 @@ simClient := ths.GetThsSimClient()
 client.LoginClient(userID, password string) (bool, error)
 client.LogoutClient() (bool, error)
 client.IsClientLoggedIn() (bool, error)
+client.ReLoginClient(userID, password string) (bool, error)
 
 // Broker login/logout
 client.LoginBroker(brokerName, account, password string) (bool, error)
@@ -105,3 +109,4 @@ Mac -> System Settings -> Privacy & Security -> Accessibility / Full Disk Access
 ## License
 
 MIT
+```
