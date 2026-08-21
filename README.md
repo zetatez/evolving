@@ -1,6 +1,3 @@
-
-
-```markdown
 # evolving
 
 MacOS automated trading engine for Tonghuashun (同花顺) via AppleScript.
